@@ -16,27 +16,28 @@ export const Survey: React.FC<SurveyProps> = ({ email }) => {
   });
 
   const handleOptionSelect = (key: string, value: string) => {
-    setFormData(prev => ({ ...prev, [key]: value }));
+    const newFormData = { ...formData, [key]: value };
+    setFormData(newFormData);
     // Auto advance after short delay
     setTimeout(() => {
         if (step < 3) setStep(step + 1);
-        else handleSubmit();
+        else handleSubmit(newFormData);
     }, 300);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (data: typeof formData) => {
     setIsSubmitting(true);
     // Logic to determine VIP status based on prompt: Producer + 3+ scripts + Excel
     const isVIP = 
-        formData.role === 'Producer' && 
-        (formData.volume === '3-5' || formData.volume === '6+') && 
-        formData.tool === 'Excel';
+        data.role === 'Producer' && 
+        (data.volume === '3-5' || data.volume === '6+') && 
+        data.tool.includes('Excel');
 
     // Save survey data to Supabase
     const result = await updateWaitlistSurvey(email, {
-      role: formData.role,
-      scripts_per_year: formData.volume,
-      current_tool: formData.tool,
+      role: data.role,
+      scripts_per_year: data.volume,
+      current_tool: data.tool,
       is_vip: isVIP
     });
 
