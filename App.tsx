@@ -7,17 +7,33 @@ import { Footer } from './components/Footer';
 import { Survey } from './components/Survey';
 import { AppState } from './types';
 import { Film } from 'lucide-react';
+import { addToWaitlist } from './lib/supabase';
 
 const App: React.FC = () => {
   const [appState, setAppState] = useState<AppState>(AppState.LANDING);
   const [userEmail, setUserEmail] = useState<string>('');
 
-  const handleEmailSubmit = (email: string) => {
-    // In a real app, this would hit an API (Mailchimp/ConvertKit)
-    console.log(`Lead Captured: ${email}`);
-    setUserEmail(email);
-    window.scrollTo(0, 0);
-    setAppState(AppState.THANK_YOU);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleEmailSubmit = async (email: string) => {
+    setIsSubmitting(true);
+    
+    const result = await addToWaitlist(email, 'landing_page');
+    
+    if (result.success) {
+      setUserEmail(email);
+      window.scrollTo(0, 0);
+      setAppState(AppState.THANK_YOU);
+    } else if (result.error === 'already_registered') {
+      // Still show thank you - they're already on the list
+      setUserEmail(email);
+      window.scrollTo(0, 0);
+      setAppState(AppState.THANK_YOU);
+    } else {
+      alert('Something went wrong. Please try again.');
+    }
+    
+    setIsSubmitting(false);
   };
 
   const handleLogoClick = () => {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle, Loader2 } from 'lucide-react';
+import { updateWaitlistSurvey } from '../lib/supabase';
 
 interface SurveyProps {
   email: string;
@@ -23,7 +24,7 @@ export const Survey: React.FC<SurveyProps> = ({ email }) => {
     }, 300);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsSubmitting(true);
     // Logic to determine VIP status based on prompt: Producer + 3+ scripts + Excel
     const isVIP = 
@@ -31,11 +32,21 @@ export const Survey: React.FC<SurveyProps> = ({ email }) => {
         (formData.volume === '3-5' || formData.volume === '6+') && 
         formData.tool === 'Excel';
 
-    setTimeout(() => {
-        setIsSubmitting(false);
-        setStep(4); // Success state
-        console.log("Survey Data:", formData, "VIP Status:", isVIP);
-    }, 1500);
+    // Save survey data to Supabase
+    const result = await updateWaitlistSurvey(email, {
+      role: formData.role,
+      scripts_per_year: formData.volume,
+      current_tool: formData.tool,
+      is_vip: isVIP
+    });
+
+    setIsSubmitting(false);
+    if (result.success) {
+      setStep(4); // Success state
+    } else {
+      // Still show success - email was captured, survey is bonus
+      setStep(4);
+    }
   };
 
   if (step === 4) {
