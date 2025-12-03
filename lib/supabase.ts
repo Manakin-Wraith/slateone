@@ -54,5 +54,33 @@ export async function updateWaitlistSurvey(email: string, surveyData: SurveyData
     return { success: false, error: error.message };
   }
 
+  // Send confirmation email
+  if (data) {
+    try {
+      await sendConfirmationEmail(data);
+    } catch (e) {
+      console.error('Failed to send confirmation email:', e);
+      // Don't fail the whole operation if email fails
+    }
+  }
+
   return { success: true, data };
+}
+
+async function sendConfirmationEmail(record: any) {
+  const response = await fetch(`${supabaseUrl}/functions/v1/send-waitlist-confirmation`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${supabaseAnonKey}`,
+    },
+    body: JSON.stringify({ record }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Failed to send email');
+  }
+
+  return response.json();
 }
