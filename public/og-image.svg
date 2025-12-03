@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#121212"/>
+  
+  <!-- Subtle grid pattern -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  
+  <!-- Clapperboard Icon (centered, larger) -->
+  <g transform="translate(520, 120) scale(5)">
+    <rect x="2" y="10" width="28" height="20" rx="2" fill="#121212" stroke="#E3FF00" stroke-width="2"/>
+    <rect x="2" y="2" width="28" height="10" rx="2" fill="#E3FF00"/>
+    <line x1="6" y1="2" x2="10" y2="12" stroke="#121212" stroke-width="2"/>
+    <line x1="14" y1="2" x2="18" y2="12" stroke="#121212" stroke-width="2"/>
+    <line x1="22" y1="2" x2="26" y2="12" stroke="#121212" stroke-width="2"/>
+    <line x1="6" y1="17" x2="20" y2="17" stroke="#E3FF00" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="6" y1="22" x2="16" y2="22" stroke="#E3FF00" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="6" y1="27" x2="12" y2="27" stroke="#E3FF00" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- SlateOne text -->
+  <text x="600" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" fill="#f5f5f5" text-anchor="middle">
+    Slate<tspan fill="#E3FF00">One</tspan>
+  </text>
+  
+  <!-- Tagline -->
+  <text x="600" y="480" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#888888" text-anchor="middle">
+    AI Script Breakdowns in Seconds
+  </text>
+  
+  <!-- Bottom accent line -->
+  <rect x="450" y="520" width="300" height="3" fill="#E3FF00" rx="1"/>
+</svg>
