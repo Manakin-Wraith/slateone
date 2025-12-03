@@ -58,10 +58,10 @@ const App: React.FC = () => {
             </div>
             {appState === AppState.LANDING && (
               <button 
-                onClick={() => document.getElementById('footer-cta')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => document.getElementById('hero-cta')?.scrollIntoView({ behavior: 'smooth' })}
                 className="text-sm font-medium text-white/70 hover:text-neon transition-colors"
               >
-                Request Access
+                Get Access
               </button>
             )}
           </div>
@@ -76,7 +76,7 @@ const App: React.FC = () => {
             <Agitation />
             <Features />
             <Founder />
-            <Footer onSignup={handleEmailSubmit} />
+            <Footer />
           </>
         ) : (
           <Survey email={userEmail} />

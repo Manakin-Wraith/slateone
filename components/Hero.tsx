@@ -14,7 +14,7 @@ export const Hero: React.FC<HeroProps> = ({ onSignup }) => {
   };
 
   return (
-    <section className="relative overflow-hidden min-h-[90vh] flex items-center border-b border-white/5">
+    <section id="hero-cta" className="relative overflow-hidden min-h-[90vh] flex items-center border-b border-white/5">
       {/* Background Gradient Mesh */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
         <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-neon/5 blur-[120px]" />
@@ -37,7 +37,7 @@ export const Hero: React.FC<HeroProps> = ({ onSignup }) => {
             </h1>
 
             <p className="text-xl text-white/60 max-w-lg leading-relaxed">
-              The first AI script breakdown tool built for the SA industry. Turn your PDF into a shooting schedule in seconds, not Sundays.
+              The first AI script breakdown tool built for the SA industry. Turn your PDF into a shooting schedule in seconds — and share it with your whole team instantly.
             </p>
 
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md">
@@ -53,13 +53,13 @@ export const Hero: React.FC<HeroProps> = ({ onSignup }) => {
                 type="submit"
                 className="bg-neon text-black font-bold px-8 py-4 rounded-lg hover:bg-white transition-colors duration-300 flex items-center justify-center gap-2 whitespace-nowrap"
               >
-                Get Early Access
+                Get Access
                 <ChevronRight className="w-5 h-5" />
               </button>
             </form>
             
             <p className="text-sm text-white/40">
-              *Free Beta access for the first 50 SA productions.
+              *Free Beta access for the first 50 SA productions. Invite your whole crew.
             </p>
           </div>
 
