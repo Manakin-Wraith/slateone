@@ -59,7 +59,7 @@ export const Hero: React.FC<HeroProps> = ({ onSignup }) => {
             </form>
             
             <p className="text-sm text-white/40">
-              *Free Beta access for the first 50 SA productions. Invite your whole crew.
+              *6 months Beta access for the first 50 SA productions. Invite your whole crew.
             </p>
           </div>
 
