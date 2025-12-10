@@ -56,14 +56,22 @@ const App: React.FC = () => {
                 Slate<span className="text-neon">One</span>
               </span>
             </div>
-            {appState === AppState.LANDING && (
-              <button 
-                onClick={() => document.getElementById('hero-cta')?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-sm font-medium text-white/70 hover:text-neon transition-colors"
+            <div className="flex items-center gap-4">
+              {appState === AppState.LANDING && (
+                <button 
+                  onClick={() => document.getElementById('hero-cta')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="text-sm font-medium text-white/70 hover:text-neon transition-colors"
+                >
+                  Get Access
+                </button>
+              )}
+              <a 
+                href="https://app.slateone.studio/login"
+                className="text-sm font-medium bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-white/70 hover:text-neon hover:border-neon/50 transition-all"
               >
-                Get Access
-              </button>
-            )}
+                Beta Login
+              </a>
+            </div>
           </div>
         </div>
       </nav>
