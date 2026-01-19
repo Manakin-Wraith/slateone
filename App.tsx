@@ -66,10 +66,10 @@ const App: React.FC = () => {
                 </button>
               )}
               <a 
-                href="https://app.slateone.studio/login"
+                href="https://app.slateone.studio/login?mode=signup"
                 className="text-sm font-medium bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-white/70 hover:text-neon hover:border-neon/50 transition-all"
               >
-                Beta Login
+                Beta Signup
               </a>
             </div>
           </div>
