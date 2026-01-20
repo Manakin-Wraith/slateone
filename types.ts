@@ -5,6 +5,7 @@ export interface UserData {
   role?: string;
   scriptsPerYear?: string;
   currentTool?: string;
+  breakdownTime?: string;
 }
 
 export enum AppState {

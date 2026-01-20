@@ -12,7 +12,8 @@ export const Survey: React.FC<SurveyProps> = ({ email }) => {
   const [formData, setFormData] = useState({
     role: '',
     volume: '',
-    tool: ''
+    tool: '',
+    breakdownTime: ''
   });
 
   const handleOptionSelect = (key: string, value: string) => {
@@ -20,7 +21,7 @@ export const Survey: React.FC<SurveyProps> = ({ email }) => {
     setFormData(newFormData);
     // Auto advance after short delay
     setTimeout(() => {
-        if (step < 3) setStep(step + 1);
+        if (step < 4) setStep(step + 1);
         else handleSubmit(newFormData);
     }, 300);
   };
@@ -38,19 +39,20 @@ export const Survey: React.FC<SurveyProps> = ({ email }) => {
       role: data.role,
       scripts_per_year: data.volume,
       current_tool: data.tool,
+      breakdown_time: data.breakdownTime,
       is_vip: isVIP
     });
 
     setIsSubmitting(false);
     if (result.success) {
-      setStep(4); // Success state
+      setStep(5); // Success state
     } else {
       // Still show success - email was captured, survey is bonus
-      setStep(4);
+      setStep(5);
     }
   };
 
-  if (step === 4) {
+  if (step === 5) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center px-4">
         <div className="text-center max-w-md animate-[slideIn_0.5s_ease-out]">
@@ -85,7 +87,7 @@ export const Survey: React.FC<SurveyProps> = ({ email }) => {
         <div className="w-full h-1 bg-white/10 rounded-full mb-12 overflow-hidden">
             <div 
                 className="h-full bg-neon transition-all duration-500 ease-out" 
-                style={{ width: `${(step / 3) * 100}%` }}
+                style={{ width: `${(step / 4) * 100}%` }}
             ></div>
         </div>
 
@@ -124,6 +126,17 @@ export const Survey: React.FC<SurveyProps> = ({ email }) => {
                 <div className="space-y-3">
                     {['Excel / Google Sheets', 'Movie Magic Scheduling', 'Pen & Paper', 'Gorilla / Other'].map(opt => (
                     <OptionButton key={opt} label={opt} onClick={() => handleOptionSelect('tool', opt)} />
+                    ))}
+                </div>
+                </div>
+            )}
+
+            {step === 4 && (
+                <div className="space-y-6 animate-[slideIn_0.3s_ease-out]">
+                <h3 className="text-xl font-medium text-white">How long does your typical script breakdown take?</h3>
+                <div className="space-y-3">
+                    {['Under 2 hours', '2-5 hours', '5-10 hours', '10+ hours', 'Multiple days'].map(opt => (
+                    <OptionButton key={opt} label={opt} onClick={() => handleOptionSelect('breakdownTime', opt)} />
                     ))}
                 </div>
                 </div>

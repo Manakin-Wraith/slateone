@@ -32,6 +32,7 @@ export interface SurveyData {
   role: string;
   scripts_per_year: string;
   current_tool: string;
+  breakdown_time: string;
   is_vip: boolean;
 }
 
@@ -42,6 +43,7 @@ export async function updateWaitlistSurvey(email: string, surveyData: SurveyData
       role: surveyData.role,
       scripts_per_year: surveyData.scripts_per_year,
       current_tool: surveyData.current_tool,
+      breakdown_time: surveyData.breakdown_time,
       is_vip: surveyData.is_vip,
       survey_completed_at: new Date().toISOString()
     })
