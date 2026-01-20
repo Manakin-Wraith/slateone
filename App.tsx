@@ -57,14 +57,6 @@ const App: React.FC = () => {
               </span>
             </div>
             <div className="flex items-center gap-4">
-              {appState === AppState.LANDING && (
-                <button 
-                  onClick={() => document.getElementById('hero-cta')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-sm font-medium text-white/70 hover:text-neon transition-colors"
-                >
-                  Get Access
-                </button>
-              )}
               <a 
                 href="https://app.slateone.studio/login?mode=signup"
                 className="text-sm font-medium bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-white/70 hover:text-neon hover:border-neon/50 transition-all"
