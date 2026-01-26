@@ -28,39 +28,79 @@ export const Hero: React.FC<HeroProps> = ({ onSignup }) => {
           <div className="space-y-8 z-10">
             <div className="inline-flex items-center space-x-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
               <span className="flex h-2 w-2 rounded-full bg-neon animate-pulse"></span>
-              <span className="text-xs font-medium text-white/80 tracking-wide uppercase">Beta Access: SA Productions Only</span>
+              <span className="text-xs font-medium text-white/80 tracking-wide uppercase">Beta Access: Limited</span>
             </div>
 
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tight text-white">
-              Stop Highlighting. <br/>
+              Upload Script. <br/>
+              Get Breakdown. <br/>
               <span className="text-neon neon-glow">Start Shooting.</span>
             </h1>
 
             <p className="text-xl text-white/60 max-w-lg leading-relaxed">
-              The first AI script breakdown tool built for the SA industry. Turn your PDF into a shooting schedule in seconds — and share it with your whole team instantly.
+              Extracts cast, props, locations, FX, Make-up, wardobe and vehicles from your PDF script in minutes. Export. Share with your crew.
             </p>
 
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md">
-              <input 
-                type="email" 
-                placeholder="producer@production.co.za" 
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-grow bg-white/5 border border-white/10 text-white placeholder-white/40 px-6 py-4 rounded-lg focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon transition-all"
-              />
-              <button 
-                type="submit"
-                className="bg-neon text-black font-bold px-8 py-4 rounded-lg hover:bg-white transition-colors duration-300 flex items-center justify-center gap-2 whitespace-nowrap"
+            {/* Step-by-step visual */}
+            <div className="flex items-center gap-4 text-sm text-white/50 max-w-lg">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-neon/20 border border-neon flex items-center justify-center text-neon font-bold">1</div>
+                <span>Upload Script (PDF)</span>
+              </div>
+              <ChevronRight className="w-4 h-4" />
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-neon/20 border border-neon flex items-center justify-center text-neon font-bold">2</div>
+                <span>Breakdown</span>
+              </div>
+              <ChevronRight className="w-4 h-4" />
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-neon/20 border border-neon flex items-center justify-center text-neon font-bold">3</div>
+                <span>Export</span>
+              </div>
+            </div>
+
+            {/* Dual CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 max-w-lg">
+              <a 
+                href="https://pay.yoco.com/r/m9jYrx"
+                className="flex-1 bg-neon text-black font-bold px-8 py-4 rounded-lg hover:bg-white transition-colors duration-300 flex items-center justify-center gap-2 text-center"
               >
-                Get Access
+                Try 1 Script (R49)
                 <ChevronRight className="w-5 h-5" />
-              </button>
-            </form>
+              </a>
+              <a 
+                href="https://pay.yoco.com/r/mEDpxp"
+                className="flex-1 bg-white/5 border-2 border-neon text-neon font-bold px-8 py-4 rounded-lg hover:bg-neon/10 transition-colors duration-300 flex items-center justify-center gap-2 text-center"
+              >
+                Join Beta (R249)
+                <ChevronRight className="w-5 h-5" />
+              </a>
+            </div>
             
-            <p className="text-sm text-white/40">
-              *6 months Beta access for the first 50 SA productions. Invite your whole crew.
-            </p>
+            <div className="space-y-2">
+              <p className="text-sm text-white/60">
+                <strong className="text-neon">R49:</strong> 1 Script upload + 1 full breakdown + 30 day access
+              </p>
+              <p className="text-sm text-white/60">
+                <strong className="text-neon">R249:</strong> Unlimited scripts for 6 months + shape the product with your feedback
+              </p>
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 pt-2">
+                <input 
+                  type="email" 
+                  placeholder="Or join waitlist: producer@production.co.za" 
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-grow bg-white/5 border border-white/10 text-white placeholder-white/40 px-4 py-3 rounded-lg focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon transition-all text-sm"
+                />
+                <button 
+                  type="submit"
+                  className="bg-white/10 border border-white/20 text-white font-medium px-6 py-3 rounded-lg hover:bg-white/20 transition-colors duration-300 whitespace-nowrap text-sm"
+                >
+                  Get Updates
+                </button>
+              </form>
+            </div>
           </div>
 
           {/* Right: The "Magic" Animation */}

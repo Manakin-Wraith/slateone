@@ -20,7 +20,7 @@ export const Founder: React.FC = () => {
              />
           </div>
           <div className="font-mono text-neon tracking-widest uppercase">The Founder</div>
-          <div className="text-sm text-white/40">Ex-1st AD & Developer</div>
+          <div className="text-sm text-white/40">Ex-Director / Producer now Developer</div>
         </div>
       </div>
     </section>
