@@ -1,12 +1,7 @@
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
 
-interface FooterProps {
-  onPrivacyPolicyClick?: () => void;
-  onTermsOfServiceClick?: () => void;
-}
-
-export const Footer: React.FC<FooterProps> = ({ onPrivacyPolicyClick, onTermsOfServiceClick }) => {
+export const Footer: React.FC = () => {
   const scrollToHero = () => {
     document.getElementById('hero-cta')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -35,30 +30,6 @@ export const Footer: React.FC<FooterProps> = ({ onPrivacyPolicyClick, onTermsOfS
           Get Access
           <ArrowUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
         </button>
-
-        {/* Legal Links */}
-        {(onPrivacyPolicyClick || onTermsOfServiceClick) && (
-          <div className="mt-12 pt-8 border-t border-white/10">
-            <div className="flex justify-center gap-6 text-sm text-white/40">
-              {onPrivacyPolicyClick && (
-                <button
-                  onClick={onPrivacyPolicyClick}
-                  className="hover:text-cyan transition-colors"
-                >
-                  Privacy Policy
-                </button>
-              )}
-              {onTermsOfServiceClick && (
-                <button
-                  onClick={onTermsOfServiceClick}
-                  className="hover:text-cyan transition-colors"
-                >
-                  Terms of Service
-                </button>
-              )}
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );

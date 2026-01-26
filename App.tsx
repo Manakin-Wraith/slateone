@@ -96,10 +96,7 @@ const App: React.FC = () => {
             <Agitation />
             <Features />
             <Pricing />
-            <Footer 
-              onPrivacyPolicyClick={handlePrivacyPolicyClick}
-              onTermsOfServiceClick={handleTermsOfServiceClick}
-            />
+            <Footer />
           </>
         ) : appState === AppState.PRIVACY_POLICY ? (
           <PrivacyPolicy onBack={handleBackToHome} />
