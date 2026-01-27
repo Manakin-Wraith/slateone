@@ -22,8 +22,7 @@ export const Hero: React.FC = () => {
             </div>
 
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tight text-white">
-              Upload Script. <br/>
-              Get Breakdown. <br/>
+              Stop Highlighting. <br/>
               <span className="text-neon neon-glow">Start Shooting.</span>
             </h1>
 
