@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Hero } from './components/Hero';
+import { HowItWorks } from './components/HowItWorks';
 import { SeeItInAction } from './components/SeeItInAction';
 import { Agitation } from './components/Agitation';
 import { Features } from './components/Features';
@@ -77,10 +78,10 @@ const App: React.FC = () => {
             </div>
             <div className="flex items-center gap-4">
               <a 
-                href="https://app.slateone.studio/login?mode=signup"
+                href="https://app.slateone.studio/login?mode=login"
                 className="text-sm font-medium bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-white/70 hover:text-neon hover:border-neon/50 transition-all"
               >
-                Beta Signup
+                Login
               </a>
             </div>
           </div>
@@ -91,7 +92,8 @@ const App: React.FC = () => {
       <main className="flex-grow pt-16">
         {appState === AppState.LANDING ? (
           <>
-            <Hero onSignup={handleEmailSubmit} />
+            <Hero />
+            <HowItWorks onSignup={handleEmailSubmit} />
             <SeeItInAction />
             <Agitation />
             <Features />

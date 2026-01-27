@@ -1,17 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ChevronRight, Zap } from 'lucide-react';
 
-interface HeroProps {
-  onSignup: (email: string) => void;
-}
-
-export const Hero: React.FC<HeroProps> = ({ onSignup }) => {
-  const [email, setEmail] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) onSignup(email);
-  };
+export const Hero: React.FC = () => {
 
   return (
     <section id="hero-cta" className="relative overflow-hidden min-h-[90vh] flex items-center border-b border-white/5">
@@ -41,65 +31,18 @@ export const Hero: React.FC<HeroProps> = ({ onSignup }) => {
               Extracts cast, props, locations, FX, Make-up, wardobe and vehicles from your PDF script in minutes. Export. Share with your crew.
             </p>
 
-            {/* Step-by-step visual */}
-            <div className="flex items-center gap-4 text-sm text-white/50 max-w-lg">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-neon/20 border border-neon flex items-center justify-center text-neon font-bold">1</div>
-                <span>Upload Script (PDF)</span>
-              </div>
-              <ChevronRight className="w-4 h-4" />
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-neon/20 border border-neon flex items-center justify-center text-neon font-bold">2</div>
-                <span>Breakdown</span>
-              </div>
-              <ChevronRight className="w-4 h-4" />
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-neon/20 border border-neon flex items-center justify-center text-neon font-bold">3</div>
-                <span>Export</span>
-              </div>
-            </div>
-
-            {/* Dual CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 max-w-lg">
+            {/* Single CTA */}
+            <div className="flex items-center gap-4 max-w-lg">
               <a 
-                href="https://pay.yoco.com/r/m9jYrx"
-                className="flex-1 bg-neon text-black font-bold px-8 py-4 rounded-lg hover:bg-white transition-colors duration-300 flex items-center justify-center gap-2 text-center"
+                href="https://app.slateone.studio/login?mode=signup"
+                className="bg-neon text-black font-bold px-10 py-4 rounded-lg hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_30px_-5px_rgba(227,255,0,0.5)] hover:shadow-[0_0_40px_-5px_rgba(227,255,0,0.7)]"
               >
-                Try 1 Script (R49)
+                Get Started
                 <ChevronRight className="w-5 h-5" />
               </a>
-              <a 
-                href="https://pay.yoco.com/r/mEDpxp"
-                className="flex-1 bg-white/5 border-2 border-neon text-neon font-bold px-8 py-4 rounded-lg hover:bg-neon/10 transition-colors duration-300 flex items-center justify-center gap-2 text-center"
-              >
-                Join Beta (R249)
-                <ChevronRight className="w-5 h-5" />
-              </a>
-            </div>
-            
-            <div className="space-y-2">
-              <p className="text-sm text-white/60">
-                <strong className="text-neon">R49:</strong> 1 Script upload + 1 full breakdown + 30 day access
+              <p className="text-sm text-white/50">
+                Free trial • No credit card required
               </p>
-              <p className="text-sm text-white/60">
-                <strong className="text-neon">R249:</strong> Unlimited scripts for 6 months + shape the product with your feedback
-              </p>
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 pt-2">
-                <input 
-                  type="email" 
-                  placeholder="Or join waitlist: producer@production.co.za" 
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-grow bg-white/5 border border-white/10 text-white placeholder-white/40 px-4 py-3 rounded-lg focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon transition-all text-sm"
-                />
-                <button 
-                  type="submit"
-                  className="bg-white/10 border border-white/20 text-white font-medium px-6 py-3 rounded-lg hover:bg-white/20 transition-colors duration-300 whitespace-nowrap text-sm"
-                >
-                  Get Updates
-                </button>
-              </form>
             </div>
           </div>
 
