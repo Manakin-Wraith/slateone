@@ -8,7 +8,7 @@ export const Founder: React.FC = () => {
         <Quote className="w-12 h-12 text-white/10 mx-auto mb-8" />
         
         <h3 className="text-2xl md:text-3xl font-display font-medium text-white mb-8 leading-relaxed">
-          "I’m building SlateOne because I got tired of doing breakdowns by hand on Joburg indie sets. I’m looking for <span className="text-neon border-b border-neon/30 pb-1">50 serious producers</span> to help me shape this tool. I don't want your money yet—I want your feedback."
+          "I’m building SlateOne because I got tired of doing breakdowns by hand on Joburg indie sets. I’m looking for <span className="text-neon border-b border-neon/30 pb-1">50 serious producers</span> to help me shape this tool. I don't want your money yet. I want your feedback."
         </h3>
 
         <div className="flex flex-col items-center justify-center space-y-2">

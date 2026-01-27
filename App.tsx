@@ -4,7 +4,6 @@ import { HowItWorks } from './components/HowItWorks';
 import { SeeItInAction } from './components/SeeItInAction';
 import { Agitation } from './components/Agitation';
 import { Features } from './components/Features';
-import { Pricing } from './components/Pricing';
 import { Founder } from './components/Founder';
 import { Footer } from './components/Footer';
 import { Survey } from './components/Survey';
@@ -98,7 +97,7 @@ const App: React.FC = () => {
             <SeeItInAction />
             <Agitation />
             <Features />
-            <Pricing />
+            <Founder />
             <Footer />
           </>
         ) : appState === AppState.PRIVACY_POLICY ? (
