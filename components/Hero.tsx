@@ -34,14 +34,14 @@ export const Hero: React.FC = () => {
             {/* Single CTA */}
             <div className="flex items-center gap-4 max-w-lg">
               <a 
-                href="https://app.slateone.studio/login?mode=signup"
+                href="https://app.slateone.studio/login?mode=signup&plan=free_trial&source=landing_hero"
                 className="bg-neon text-black font-bold px-10 py-4 rounded-lg hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_30px_-5px_rgba(227,255,0,0.5)] hover:shadow-[0_0_40px_-5px_rgba(227,255,0,0.7)]"
               >
                 Get Started
                 <ChevronRight className="w-5 h-5" />
               </a>
               <p className="text-sm text-white/50">
-                Free trial • 1 script upload + 1 breakdown
+                1 script upload + 1 breakdown + 1 export
               </p>
             </div>
           </div>
