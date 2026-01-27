@@ -86,3 +86,73 @@ async function sendConfirmationEmail(record: any) {
 
   return response.json();
 }
+
+export interface PaymentLeadData {
+  email: string;
+  name: string;
+  phone?: string;
+  payment_tier: 'R49' | 'R249';
+  source?: string;
+}
+
+function generateTrackingId(): string {
+  return `sl_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+}
+
+export async function createPaymentLead(leadData: PaymentLeadData) {
+  const trackingId = generateTrackingId();
+  const yocoBaseUrl = leadData.payment_tier === 'R49' 
+    ? 'https://pay.yoco.com/r/m9jYrx'
+    : 'https://pay.yoco.com/r/mEDpxp';
+  
+  const yocoUrl = `${yocoBaseUrl}?ref=${trackingId}&email=${encodeURIComponent(leadData.email)}`;
+
+  const { data, error } = await supabase
+    .from('payment_leads')
+    .insert([{
+      email: leadData.email,
+      name: leadData.name,
+      phone: leadData.phone || null,
+      payment_tier: leadData.payment_tier,
+      yoco_url: yocoUrl,
+      tracking_id: trackingId,
+      source: leadData.source || 'how_it_works_section',
+      status: 'intent'
+    }])
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Payment lead creation error:', error);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data, yocoUrl, trackingId };
+}
+
+export async function updatePaymentLeadStatus(
+  trackingId: string, 
+  status: 'redirected' | 'completed' | 'abandoned'
+) {
+  const updateData: any = { status };
+  
+  if (status === 'redirected') {
+    updateData.redirected_at = new Date().toISOString();
+  } else if (status === 'completed') {
+    updateData.completed_at = new Date().toISOString();
+  }
+
+  const { data, error } = await supabase
+    .from('payment_leads')
+    .update(updateData)
+    .eq('tracking_id', trackingId)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Payment lead status update error:', error);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data };
+}

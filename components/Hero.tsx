@@ -41,7 +41,7 @@ export const Hero: React.FC = () => {
                 <ChevronRight className="w-5 h-5" />
               </a>
               <p className="text-sm text-white/50">
-                Free trial • No credit card required
+                Free trial • 1 script upload + 1 breakdown
               </p>
             </div>
           </div>

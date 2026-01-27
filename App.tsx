@@ -35,7 +35,8 @@ const App: React.FC = () => {
       window.scrollTo(0, 0);
       setAppState(AppState.THANK_YOU);
     } else {
-      alert('Something went wrong. Please try again.');
+      console.error('Waitlist signup error:', result.error);
+      alert(`Something went wrong. Please try again. Error: ${result.error}`);
     }
     
     setIsSubmitting(false);

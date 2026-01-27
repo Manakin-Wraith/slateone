@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronRight, Upload, Zap, Download } from 'lucide-react';
+import { PaymentModal } from './PaymentModal';
 
 interface HowItWorksProps {
   onSignup: (email: string) => void;
@@ -7,6 +8,8 @@ interface HowItWorksProps {
 
 export const HowItWorks: React.FC<HowItWorksProps> = ({ onSignup }) => {
   const [email, setEmail] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTier, setSelectedTier] = useState<'R49' | 'R249'>('R49');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,11 +36,13 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onSignup }) => {
           {/* Step 1 */}
           <div className="relative">
             <div className="bg-[#161616] border border-white/10 rounded-2xl p-8 hover:border-neon/30 transition-all duration-300">
-              <div className="w-16 h-16 rounded-full bg-neon/20 border-2 border-neon flex items-center justify-center text-neon font-bold text-2xl mb-6">
-                1
-              </div>
-              <div className="w-12 h-12 rounded-xl bg-neon/10 flex items-center justify-center mb-4">
-                <Upload className="w-6 h-6 text-neon" />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 rounded-full bg-neon/20 border-2 border-neon flex items-center justify-center text-neon font-bold text-xl flex-shrink-0">
+                  1
+                </div>
+                <div className="w-12 h-12 rounded-xl bg-neon/10 flex items-center justify-center flex-shrink-0">
+                  <Upload className="w-6 h-6 text-neon" />
+                </div>
               </div>
               <h3 className="text-xl font-bold text-white mb-3">Upload Script</h3>
               <p className="text-white/60 text-sm leading-relaxed">
@@ -51,11 +56,13 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onSignup }) => {
           {/* Step 2 */}
           <div className="relative">
             <div className="bg-[#161616] border border-white/10 rounded-2xl p-8 hover:border-neon/30 transition-all duration-300">
-              <div className="w-16 h-16 rounded-full bg-neon/20 border-2 border-neon flex items-center justify-center text-neon font-bold text-2xl mb-6">
-                2
-              </div>
-              <div className="w-12 h-12 rounded-xl bg-neon/10 flex items-center justify-center mb-4">
-                <Zap className="w-6 h-6 text-neon" />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 rounded-full bg-neon/20 border-2 border-neon flex items-center justify-center text-neon font-bold text-xl flex-shrink-0">
+                  2
+                </div>
+                <div className="w-12 h-12 rounded-xl bg-neon/10 flex items-center justify-center flex-shrink-0">
+                  <Zap className="w-6 h-6 text-neon" />
+                </div>
               </div>
               <h3 className="text-xl font-bold text-white mb-3">AI Breakdown</h3>
               <p className="text-white/60 text-sm leading-relaxed">
@@ -69,11 +76,13 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onSignup }) => {
           {/* Step 3 */}
           <div className="relative">
             <div className="bg-[#161616] border border-white/10 rounded-2xl p-8 hover:border-neon/30 transition-all duration-300">
-              <div className="w-16 h-16 rounded-full bg-neon/20 border-2 border-neon flex items-center justify-center text-neon font-bold text-2xl mb-6">
-                3
-              </div>
-              <div className="w-12 h-12 rounded-xl bg-neon/10 flex items-center justify-center mb-4">
-                <Download className="w-6 h-6 text-neon" />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 rounded-full bg-neon/20 border-2 border-neon flex items-center justify-center text-neon font-bold text-xl flex-shrink-0">
+                  3
+                </div>
+                <div className="w-12 h-12 rounded-xl bg-neon/10 flex items-center justify-center flex-shrink-0">
+                  <Download className="w-6 h-6 text-neon" />
+                </div>
               </div>
               <h3 className="text-xl font-bold text-white mb-3">Export & Share</h3>
               <p className="text-white/60 text-sm leading-relaxed">
@@ -84,14 +93,16 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onSignup }) => {
 
         </div>
 
-        {/* Pricing Options */}
+        {/* Pricing Options - COMMENTED OUT 
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             
-            {/* Try 1 Script */}
-            <a 
-              href="https://pay.yoco.com/r/m9jYrx"
-              className="group bg-[#161616] border-2 border-white/10 hover:border-neon rounded-xl p-6 transition-all duration-300 hover:shadow-[0_0_30px_-5px_rgba(227,255,0,0.2)]"
+            <button
+              onClick={() => {
+                setSelectedTier('R49');
+                setIsModalOpen(true);
+              }}
+              className="group bg-[#161616] border-2 border-white/10 hover:border-neon rounded-xl p-6 transition-all duration-300 hover:shadow-[0_0_30px_-5px_rgba(227,255,0,0.2)] w-full text-left"
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
@@ -107,12 +118,14 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onSignup }) => {
                 Try 1 Script
                 <ChevronRight className="w-4 h-4" />
               </div>
-            </a>
+            </button>
 
-            {/* Beta Access */}
-            <a 
-              href="https://pay.yoco.com/r/mEDpxp"
-              className="group bg-gradient-to-br from-neon/10 to-neon/5 border-2 border-neon rounded-xl p-6 transition-all duration-300 hover:shadow-[0_0_40px_-5px_rgba(227,255,0,0.4)] relative overflow-hidden"
+            <button
+              onClick={() => {
+                setSelectedTier('R249');
+                setIsModalOpen(true);
+              }}
+              className="group bg-gradient-to-br from-neon/10 to-neon/5 border-2 border-neon rounded-xl p-6 transition-all duration-300 hover:shadow-[0_0_40px_-5px_rgba(227,255,0,0.4)] relative overflow-hidden w-full text-left"
             >
               <div className="absolute top-3 right-3">
                 <span className="bg-neon text-black px-3 py-1 rounded-full text-xs font-bold uppercase">
@@ -122,22 +135,25 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onSignup }) => {
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-1">R249</h3>
-                  <p className="text-sm text-white/50">6 months beta access</p>
+                  <p className="text-sm text-white/50">Beta access</p>
                 </div>
                 <ChevronRight className="w-6 h-6 text-neon group-hover:translate-x-1 transition-transform" />
               </div>
               <p className="text-white/70 text-sm mb-4">
-                Unlimited scripts for 6 months + shape the product with your feedback
+                Unlimited scripts for untill we go LIVE + shape the product with your feedback
               </p>
               <div className="inline-flex items-center gap-2 text-neon text-sm font-medium">
                 Join Beta
                 <ChevronRight className="w-4 h-4" />
               </div>
-            </a>
+            </button>
 
           </div>
+        </div>
+        */}
 
-          {/* Waitlist Form */}
+        {/* Waitlist Form */}
+        <div className="max-w-4xl mx-auto">
           <div className="bg-[#161616] border border-white/10 rounded-xl p-6">
             <p className="text-white/60 text-sm mb-4 text-center">
               Not ready yet? Join the waitlist for updates and early access opportunities.
@@ -162,6 +178,13 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onSignup }) => {
         </div>
 
       </div>
+
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        paymentTier={selectedTier}
+      />
     </section>
   );
 };
