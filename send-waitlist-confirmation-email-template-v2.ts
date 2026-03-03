@@ -103,16 +103,10 @@ function generateProfessionalEmail(record: WaitlistEntry): string {
               <!-- 5. What Happens Next -->
               <h2 style="color: #f0f0f0; font-size: 18px; margin: 0 0 12px 0; font-weight: 600;">What Happens Next</h2>
               <ol style="color: #a0a0a0; font-size: 14px; line-height: 1.8; margin: 0 0 24px 0; padding-left: 20px;">
-                <li>Create your account and get started immediately</li>
+                <li>We'll send login credentials within 24 hours</li>
                 <li>Upload your script and get your first breakdown (free during beta)</li>
                 <li>Share what works and what doesn't</li>
               </ol>
-              
-              <div style="text-align: center; margin: 32px 0;">
-                <a href="https://app.slateone.studio/login?mode=signup" style="display: inline-block; background-color: #E3FF00; color: #0a0a0a; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 15px; transition: all 0.2s;">
-                  Create Your Account →
-                </a>
-              </div>
               
               <div style="background-color: #1a1a1a; border-left: 3px solid #E3FF00; padding: 16px 20px; margin: 24px 0; border-radius: 4px;">
                 <p style="color: #a0a0a0; font-size: 13px; line-height: 1.6; margin: 0;">
@@ -232,17 +226,11 @@ function generateStudentEmail(record: WaitlistEntry): string {
               <!-- 5. Your Journey Starts Here -->
               <h2 style="color: #f0f0f0; font-size: 18px; margin: 0 0 12px 0; font-weight: 600;">Your Journey Starts Here</h2>
               <ol style="color: #a0a0a0; font-size: 14px; line-height: 1.8; margin: 0 0 24px 0; padding-left: 20px;">
-                <li>Create your account and dive in</li>
+                <li>We'll send your login credentials within 24 hours</li>
                 <li>Upload a script from class or a personal project</li>
                 <li>Get your first AI-powered breakdown (free during beta)</li>
                 <li>Share your experience and help us improve</li>
               </ol>
-              
-              <div style="text-align: center; margin: 32px 0;">
-                <a href="https://app.slateone.studio/login?mode=signup" style="display: inline-block; background-color: #E3FF00; color: #0a0a0a; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 15px; transition: all 0.2s;">
-                  Create Your Account →
-                </a>
-              </div>
               
               <div style="background-color: #1a1a1a; border-left: 3px solid #E3FF00; padding: 16px 20px; margin: 24px 0; border-radius: 4px;">
                 <p style="color: #a0a0a0; font-size: 13px; line-height: 1.6; margin: 0;">

@@ -1,45 +1,18 @@
 import React, { useState } from 'react';
 import { Hero } from './components/Hero';
-import { HowItWorks } from './components/HowItWorks';
-import { SeeItInAction } from './components/SeeItInAction';
-import { Agitation } from './components/Agitation';
-import { Features } from './components/Features';
-import { Founder } from './components/Founder';
+import { IndustryReality } from './components/IndustryReality';
+import { OperatingLayer } from './components/OperatingLayer';
+import { SystemArchitecture } from './components/SystemArchitecture';
+import { BuiltFor } from './components/BuiltFor';
+import { Pricing } from './components/Pricing';
 import { Footer } from './components/Footer';
-import { Survey } from './components/Survey';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfService } from './components/TermsOfService';
 import { AppState } from './types';
 import { Film } from 'lucide-react';
-import { addToWaitlist } from './lib/supabase';
 
 const App: React.FC = () => {
   const [appState, setAppState] = useState<AppState>(AppState.LANDING);
-  const [userEmail, setUserEmail] = useState<string>('');
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleEmailSubmit = async (email: string) => {
-    setIsSubmitting(true);
-    
-    const result = await addToWaitlist(email, 'landing_page');
-    
-    if (result.success) {
-      setUserEmail(email);
-      window.scrollTo(0, 0);
-      setAppState(AppState.THANK_YOU);
-    } else if (result.error === 'already_registered') {
-      // Still show thank you - they're already on the list
-      setUserEmail(email);
-      window.scrollTo(0, 0);
-      setAppState(AppState.THANK_YOU);
-    } else {
-      console.error('Waitlist signup error:', result.error);
-      alert(`Something went wrong. Please try again. Error: ${result.error}`);
-    }
-    
-    setIsSubmitting(false);
-  };
 
   const handleLogoClick = () => {
     setAppState(AppState.LANDING);
@@ -63,7 +36,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-neon selection:text-black">
-      {/* Navigation / Header */}
+      {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-charcoal/90 backdrop-blur-md border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -71,12 +44,19 @@ const App: React.FC = () => {
               className="flex items-center cursor-pointer group" 
               onClick={handleLogoClick}
             >
-              <Film className="h-6 w-6 text-neon mr-2 group-hover:rotate-180 transition-transform duration-500" />
+              <Film className="h-5 w-5 text-neon mr-2" />
               <span className="font-display font-bold text-xl tracking-tight text-white">
                 Slate<span className="text-neon">One</span>
               </span>
             </div>
             <div className="flex items-center gap-4">
+              <a 
+                href="#pricing"
+                onClick={(e) => { e.preventDefault(); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }); }}
+                className="hidden sm:inline-block text-xs font-mono text-white/40 hover:text-neon transition-colors tracking-wider uppercase cursor-pointer"
+              >
+                Pricing
+              </a>
               <a 
                 href="https://app.slateone.studio/login?mode=login"
                 className="text-sm font-medium bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-white/70 hover:text-neon hover:border-neon/50 transition-all"
@@ -93,34 +73,33 @@ const App: React.FC = () => {
         {appState === AppState.LANDING ? (
           <>
             <Hero />
-            <HowItWorks onSignup={handleEmailSubmit} />
-            <SeeItInAction />
-            <Agitation />
-            <Features />
-            <Founder />
+            <IndustryReality />
+            <OperatingLayer />
+            <SystemArchitecture />
+            <BuiltFor />
+            <Pricing />
             <Footer />
           </>
         ) : appState === AppState.PRIVACY_POLICY ? (
           <PrivacyPolicy onBack={handleBackToHome} />
         ) : appState === AppState.TERMS_OF_SERVICE ? (
           <TermsOfService onBack={handleBackToHome} />
-        ) : (
-          <Survey email={userEmail} />
-        )}
+        ) : null}
       </main>
 
-      <div className="bg-black text-white/30 text-xs py-4 text-center border-t border-white/5">
-        <p>&copy; {new Date().getFullYear()} SlateOne. Built for the SA Film Industry.</p>
+      {/* Legal footer bar */}
+      <div className="bg-black text-white/20 text-xs py-4 text-center border-t border-white/5">
+        <p>&copy; {new Date().getFullYear()} SlateOne. Production Infrastructure for Film & TV.</p>
         <div className="mt-2 space-x-4">
           <button 
             onClick={handlePrivacyPolicyClick}
-            className="hover:text-white transition-colors"
+            className="hover:text-white/50 transition-colors"
           >
             Privacy Policy
           </button>
           <button 
             onClick={handleTermsOfServiceClick}
-            className="hover:text-white transition-colors"
+            className="hover:text-white/50 transition-colors"
           >
             Terms of Service
           </button>

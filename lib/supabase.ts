@@ -130,6 +130,63 @@ export async function createPaymentLead(leadData: PaymentLeadData) {
   return { success: true, data, yocoUrl, trackingId };
 }
 
+export type SubscriptionTier = 'development_os' | 'producer_os' | 'studio_os';
+
+export interface SubscriptionLeadData {
+  email: string;
+  name: string;
+  phone?: string;
+  company?: string;
+  payment_tier: SubscriptionTier;
+  source?: string;
+}
+
+const TIER_CONFIG: Record<SubscriptionTier, { dbTier: string; price: number; yocoUrl: string | null }> = {
+  development_os: {
+    dbTier: 'R499',
+    price: 499,
+    yocoUrl: 'https://pay.yoco.com/celebration-house-entertainment?amount=499.00&reference=development-os',
+  },
+  producer_os: {
+    dbTier: 'R1999',
+    price: 1999,
+    yocoUrl: 'https://pay.yoco.com/celebration-house-entertainment?amount=1999.00&reference=producer-os',
+  },
+  studio_os: {
+    dbTier: 'R3499',
+    price: 3499,
+    yocoUrl: null, // Studio OS uses contact sales flow
+  },
+};
+
+export async function createSubscriptionLead(leadData: SubscriptionLeadData) {
+  const trackingId = generateTrackingId();
+  const config = TIER_CONFIG[leadData.payment_tier];
+  
+  const yocoUrl = config.yocoUrl 
+    ? `${config.yocoUrl}&ref=${trackingId}&email=${encodeURIComponent(leadData.email)}`
+    : null;
+
+  try {
+    await supabase
+      .from('payment_leads')
+      .insert([{
+        email: leadData.email,
+        name: leadData.name,
+        phone: leadData.phone || null,
+        payment_tier: config.dbTier,
+        yoco_url: yocoUrl || '',
+        tracking_id: trackingId,
+        source: `pricing_${leadData.payment_tier}${leadData.company ? `:${leadData.company}` : ''}`,
+        status: 'intent'
+      }]);
+  } catch (e) {
+    console.error('Subscription lead save error (non-blocking):', e);
+  }
+
+  return { success: true, yocoUrl, trackingId };
+}
+
 export async function updatePaymentLeadStatus(
   trackingId: string, 
   status: 'redirected' | 'completed' | 'abandoned'

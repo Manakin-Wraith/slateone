@@ -64,7 +64,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onSignup }) => {
                   <Zap className="w-6 h-6 text-neon" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">AI Breakdown</h3>
+              <h3 className="text-xl font-bold text-white mb-3">Breakdown</h3>
               <p className="text-white/60 text-sm leading-relaxed">
                 Our AI extracts cast, props, locations, FX, wardrobe, vehicles, and more in minutes.
               </p>
@@ -92,65 +92,6 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onSignup }) => {
           </div>
 
         </div>
-
-        {/* Pricing Options - COMMENTED OUT 
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            
-            <button
-              onClick={() => {
-                setSelectedTier('R49');
-                setIsModalOpen(true);
-              }}
-              className="group bg-[#161616] border-2 border-white/10 hover:border-neon rounded-xl p-6 transition-all duration-300 hover:shadow-[0_0_30px_-5px_rgba(227,255,0,0.2)] w-full text-left"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-1">R49</h3>
-                  <p className="text-sm text-white/50">One-time payment</p>
-                </div>
-                <ChevronRight className="w-6 h-6 text-neon group-hover:translate-x-1 transition-transform" />
-              </div>
-              <p className="text-white/70 text-sm mb-4">
-                1 Script upload + 1 full breakdown + 1 month access
-              </p>
-              <div className="inline-flex items-center gap-2 text-neon text-sm font-medium">
-                Try 1 Script
-                <ChevronRight className="w-4 h-4" />
-              </div>
-            </button>
-
-            <button
-              onClick={() => {
-                setSelectedTier('R249');
-                setIsModalOpen(true);
-              }}
-              className="group bg-gradient-to-br from-neon/10 to-neon/5 border-2 border-neon rounded-xl p-6 transition-all duration-300 hover:shadow-[0_0_40px_-5px_rgba(227,255,0,0.4)] relative overflow-hidden w-full text-left"
-            >
-              <div className="absolute top-3 right-3">
-                <span className="bg-neon text-black px-3 py-1 rounded-full text-xs font-bold uppercase">
-                  Popular
-                </span>
-              </div>
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-1">R249</h3>
-                  <p className="text-sm text-white/50">Beta access</p>
-                </div>
-                <ChevronRight className="w-6 h-6 text-neon group-hover:translate-x-1 transition-transform" />
-              </div>
-              <p className="text-white/70 text-sm mb-4">
-                Unlimited scripts for untill we go LIVE + shape the product with your feedback
-              </p>
-              <div className="inline-flex items-center gap-2 text-neon text-sm font-medium">
-                Join Beta
-                <ChevronRight className="w-4 h-4" />
-              </div>
-            </button>
-
-          </div>
-        </div>
-        */}
 
         {/* Waitlist Form */}
         <div className="max-w-4xl mx-auto">

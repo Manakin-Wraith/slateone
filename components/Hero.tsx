@@ -1,95 +1,121 @@
 import React from 'react';
-import { ChevronRight, Zap } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export const Hero: React.FC = () => {
 
+  const scrollToPricing = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section id="hero-cta" className="relative overflow-hidden min-h-[90vh] flex items-center border-b border-white/5">
-      {/* Background Gradient Mesh */}
+    <section id="hero-cta" className="relative overflow-hidden min-h-[100vh] flex items-end lg:items-center border-b border-white/5">
+      {/* Subtle grid background */}
+      <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:60px_60px]" />
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-        <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-neon/5 blur-[120px]" />
-        <div className="absolute top-[40%] -right-[10%] w-[40%] h-[60%] rounded-full bg-cyan/5 blur-[120px]" />
+        <div className="absolute -top-[30%] -left-[15%] w-[50%] h-[50%] rounded-full bg-neon/3 blur-[150px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 lg:py-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-20 pb-32 lg:py-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           
           {/* Left: Copy */}
-          <div className="space-y-8 z-10">
-            <div className="inline-flex items-center space-x-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
-              <span className="flex h-2 w-2 rounded-full bg-neon animate-pulse"></span>
-              <span className="text-xs font-medium text-white/80 tracking-wide uppercase">Beta Access: Limited</span>
+          <div className="z-10">
+            {/* Eyebrow */}
+            <div className="inline-flex items-center space-x-3 mb-10">
+              <span className="h-px w-12 bg-neon/50"></span>
+              <span className="text-xs font-mono text-neon/80 tracking-[0.2em] uppercase">Production Infrastructure</span>
             </div>
 
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tight text-white">
-              Stop Highlighting. <br/>
-              <span className="text-neon neon-glow">Start Shooting.</span>
+            {/* Headline */}
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-[5.5rem] font-bold leading-[0.95] tracking-tight text-white mb-8">
+              The Operating System<br/>
+              for Modern Film<br/>
+              <span className="text-neon">Production.</span>
             </h1>
 
-            <p className="text-xl text-white/60 max-w-lg leading-relaxed">
-              Extracts cast, props, locations, FX, Make-up, wardobe and vehicles from your PDF script in minutes. Export. Share with your crew.
+            {/* Subheadline */}
+            <p className="text-xl md:text-2xl text-white/50 max-w-2xl leading-relaxed mb-12 font-light">
+              SlateOne converts scripts into structured production intelligence and replaces fragmented workflows with a unified operating layer.
             </p>
 
-            {/* Single CTA */}
-            <div className="flex items-center gap-4 max-w-lg">
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <a 
-                href="https://app.slateone.studio/login?mode=signup&plan=free_trial&source=landing_hero"
-                className="bg-neon text-black font-bold px-10 py-4 rounded-lg hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_30px_-5px_rgba(227,255,0,0.5)] hover:shadow-[0_0_40px_-5px_rgba(227,255,0,0.7)]"
+                href="#pricing"
+                onClick={scrollToPricing}
+                className="bg-neon text-black font-bold px-8 py-4 rounded-lg hover:bg-white transition-all duration-300 flex items-center gap-3 text-sm tracking-wide uppercase"
               >
-                Get Started
-                <ChevronRight className="w-5 h-5" />
+                View Pricing
+                <ArrowRight className="w-4 h-4" />
               </a>
-              <p className="text-sm text-white/50">
-                1 script upload + 1 breakdown + 1 export
-              </p>
+              <a 
+                href="mailto:hello@slateone.studio?subject=Production Demo Request"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/50 hover:text-neon border border-white/10 hover:border-neon/30 px-8 py-4 rounded-lg transition-all duration-300 text-sm tracking-wide uppercase font-medium"
+              >
+                Book a Production Demo
+              </a>
             </div>
           </div>
 
-          {/* Right: The "Magic" Animation */}
-          <div className="relative h-[400px] sm:h-[500px] w-full bg-black/40 border border-white/10 rounded-xl overflow-hidden shadow-2xl backdrop-blur-sm">
-            <div className="absolute top-0 w-full h-8 bg-[#1a1a1a] flex items-center px-4 gap-2 border-b border-white/5 z-20">
-              <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
+          {/* Right: Script-to-Breakdown Animation */}
+          <div className="relative h-[400px] sm:h-[500px] w-full bg-black/40 border border-white/[0.08] rounded-xl overflow-hidden shadow-2xl backdrop-blur-sm hidden lg:block">
+            <div className="absolute top-0 w-full h-8 bg-[#111] flex items-center px-4 gap-2 border-b border-white/5 z-20">
+              <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+              <span className="ml-3 text-[10px] font-mono text-white/20 tracking-wider uppercase">SlateOne — Breakdown Engine</span>
             </div>
             
             <div className="flex h-full pt-8">
-              {/* Animated Script Side */}
-              <div className="w-1/2 border-r border-white/5 p-6 overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-charcoal z-10"></div>
-                <div className="animate-[scrollUp_8s_linear_infinite] font-mono text-xs text-white/50 space-y-4">
-                  {Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i} className="space-y-2 opacity-60">
-                      <p className="text-white/80 font-bold">INT. JOHANNESBURG APARTMENT - DAY</p>
+              {/* Script Side */}
+              <div className="w-1/2 border-r border-white/5 p-5 overflow-hidden relative">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80 z-10 pointer-events-none"></div>
+                <div className="animate-[heroScroll_12s_linear_infinite] font-mono text-[11px] text-white/40 space-y-5 leading-relaxed">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <div key={i} className="space-y-3">
+                      <p className="text-white/60 font-bold tracking-wide">EXT. MABONENG PRECINCT — DAY</p>
+                      <p>A RED TAXI swerves through traffic.</p>
+                      <br/>
+                      <p className="text-white/60 font-bold tracking-wide">INT. JOHANNESBURG APARTMENT — DAY</p>
                       <p>THABO (30s) sits at a cluttered desk.</p>
-                      <p className="pl-8">THABO</p>
-                      <p className="pl-4">I can't believe I have to type this all out again.</p>
+                      <p className="pl-8 text-white/30">THABO</p>
+                      <p className="pl-6 text-white/30">I can't believe I have to type<br/>this all out again.</p>
                       <p>He takes a sip of COFFEE.</p>
                       <br/>
-                      <p className="text-white/80 font-bold">EXT. MABONENG PRECINCT - DAY</p>
+                      <p className="text-white/60 font-bold tracking-wide">INT. JOHANNESBURG APARTMENT — DAY</p>
+                      <p>THABO (30s) sits at a cluttered desk.</p>
+                      <p className="pl-8 text-white/30">THABO</p>
+                      <p className="pl-6 text-white/30">I can't believe I have to type<br/>this all out again.</p>
+                      <p>He takes a sip of COFFEE.</p>
+                      <br/>
+                      <p className="text-white/60 font-bold tracking-wide">EXT. MABONENG PRECINCT — DAY</p>
                       <p>A RED TAXI swerves through traffic.</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Animated Schedule Side */}
-              <div className="w-1/2 p-4 bg-[#0F0F0F] relative">
-                 <div className="space-y-3">
-                   {/* Simulating items popping in */}
-                   <ScheduleCard delay="0s" title="1. INT. JHB APARTMENT" meta="D1 • 1/8 Pgs • Cast: Thabo" color="border-neon" />
-                   <ScheduleCard delay="1s" title="2. EXT. MABONENG" meta="D1 • 4/8 Pgs • Cast: Taxi Driver" color="border-cyan" />
-                   <ScheduleCard delay="2s" title="3. INT. HOSPITAL" meta="N1 • 2/8 Pgs • Cast: Doctor" color="border-pink-500" />
-                   <ScheduleCard delay="3s" title="4. EXT. ROOFTOP" meta="N1 • 6/8 Pgs • Cast: Thabo, Sarah" color="border-purple-500" />
-                 </div>
-                 
-                 {/* Processing Overlay */}
-                 <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-[1px] animate-[fadeOut_4s_forwards]">
-                    <div className="flex flex-col items-center">
-                      <Zap className="w-10 h-10 text-neon animate-bounce mb-2" />
-                      <span className="font-mono text-neon text-xs">AI BREAKDOWN...</span>
+              {/* Breakdown Side */}
+              <div className="w-1/2 p-4 bg-[#0a0a0a] relative">
+                <div className="space-y-3 pt-1">
+                  <BreakdownCard delay="0s" title="1. INT. JHB APARTMENT" meta="D1 • 1/8 PGS • CAST: THABO" color="border-neon" />
+                  <BreakdownCard delay="1.2s" title="2. EXT. MABONENG" meta="D1 • 4/8 PGS • CAST: TAXI DRIVER" color="border-cyan" />
+                  <BreakdownCard delay="2.4s" title="3. INT. HOSPITAL" meta="N1 • 2/8 PGS • CAST: DOCTOR" color="border-pink-500" />
+                  <BreakdownCard delay="3.6s" title="4. EXT. ROOFTOP" meta="N1 • 6/8 PGS • CAST: THABO, SARAH" color="border-purple-400" />
+                </div>
+
+                {/* Processing overlay */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/70 backdrop-blur-[2px] animate-[heroFade_5s_forwards] pointer-events-none">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-neon/10 border border-neon/20 flex items-center justify-center animate-pulse">
+                      <span className="text-neon text-sm font-bold">S1</span>
                     </div>
-                 </div>
+                    <span className="font-mono text-[10px] text-neon/80 tracking-[0.2em] uppercase">Processing Script</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -98,17 +124,17 @@ export const Hero: React.FC = () => {
       </div>
 
       <style>{`
-        @keyframes scrollUp {
+        @keyframes heroScroll {
           from { transform: translateY(0); }
           to { transform: translateY(-50%); }
         }
-        @keyframes slideIn {
-          from { opacity: 0; transform: translateX(20px); }
+        @keyframes heroSlideIn {
+          from { opacity: 0; transform: translateX(16px); }
           to { opacity: 1; transform: translateX(0); }
         }
-        @keyframes fadeOut {
-          0% { opacity: 1; visibility: visible; }
-          80% { opacity: 1; visibility: visible; }
+        @keyframes heroFade {
+          0% { opacity: 1; }
+          70% { opacity: 1; }
           100% { opacity: 0; visibility: hidden; }
         }
       `}</style>
@@ -116,12 +142,12 @@ export const Hero: React.FC = () => {
   );
 };
 
-const ScheduleCard = ({ delay, title, meta, color }: { delay: string; title: string; meta: string; color: string }) => (
+const BreakdownCard = ({ delay, title, meta, color }: { delay: string; title: string; meta: string; color: string }) => (
   <div 
-    className={`bg-[#1a1a1a] p-3 rounded border-l-4 ${color} shadow-lg opacity-0`}
-    style={{ animation: `slideIn 0.5s ease-out forwards ${delay}` }}
+    className={`bg-[#111] p-3.5 rounded-lg border-l-[3px] ${color} opacity-0`}
+    style={{ animation: `heroSlideIn 0.5s ease-out forwards ${delay}` }}
   >
-    <div className="font-bold text-white text-xs mb-1">{title}</div>
-    <div className="text-[10px] text-white/50 font-mono uppercase">{meta}</div>
+    <div className="font-bold text-white/80 text-xs mb-1 tracking-wide">{title}</div>
+    <div className="text-[10px] text-white/30 font-mono tracking-wider">{meta}</div>
   </div>
 );
