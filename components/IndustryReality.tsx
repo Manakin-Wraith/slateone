@@ -13,11 +13,6 @@ export const IndustryReality: React.FC = () => {
     <section className="py-32 bg-black border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Section label */}
-        <div className="inline-flex items-center space-x-3 mb-6">
-          <span className="h-px w-12 bg-white/20"></span>
-          <span className="text-xs font-mono text-white/40 tracking-[0.2em] uppercase">The Problem</span>
-        </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           

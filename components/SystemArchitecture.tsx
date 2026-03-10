@@ -16,11 +16,6 @@ export const SystemArchitecture: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        {/* Section label */}
-        <div className="inline-flex items-center space-x-3 mb-6">
-          <span className="h-px w-12 bg-white/20"></span>
-          <span className="text-xs font-mono text-white/40 tracking-[0.2em] uppercase">System Flow</span>
-        </div>
 
         <div className="text-center mb-20">
           <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-6 leading-[1.1]">

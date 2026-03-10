@@ -13,11 +13,6 @@ export const BuiltFor: React.FC = () => {
     <section className="py-32 bg-charcoal border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Section label */}
-        <div className="inline-flex items-center space-x-3 mb-6">
-          <span className="h-px w-12 bg-white/20"></span>
-          <span className="text-xs font-mono text-white/40 tracking-[0.2em] uppercase">Who It's For</span>
-        </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-start">
 
@@ -32,7 +27,10 @@ export const BuiltFor: React.FC = () => {
             </p>
             <div className="border-l-2 border-neon/30 pl-6">
               <p className="text-white/50 text-sm leading-relaxed italic">
-                "If your production runs on systems, SlateOne is the layer that connects them all."
+                "I am loving SlateOne and will highly recommend it to my colleagues! It just did an excellent script breakdown and DOOD's for my film Umbulali — saved me so much time and $'s."
+              </p>
+              <p className="text-xs text-white/30 font-mono mt-3 tracking-wide">
+                — Dan Jawitz, Film producer
               </p>
             </div>
           </div>

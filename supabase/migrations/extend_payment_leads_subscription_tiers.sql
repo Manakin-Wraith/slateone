@@ -6,7 +6,7 @@ ALTER TABLE payment_leads DROP CONSTRAINT IF EXISTS payment_leads_payment_tier_c
 
 ALTER TABLE payment_leads 
 ADD CONSTRAINT payment_leads_payment_tier_check 
-CHECK (payment_tier IN ('R49', 'R249', 'R499', 'R1999', 'R3499'));
+CHECK (payment_tier IN ('R49', 'R249', 'R499', 'R1999', 'R4999', 'feature_film', 'tv_series', 'short_film', 'indie_studio', 'production_company', 'studio', 'single_script', 'pack_5', 'pack_10', 'pack_25'));
 
 -- Add company field for production company tracking
 ALTER TABLE payment_leads 

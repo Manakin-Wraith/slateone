@@ -21,11 +21,6 @@ export const Hero: React.FC = () => {
           
           {/* Left: Copy */}
           <div className="z-10">
-            {/* Eyebrow */}
-            <div className="inline-flex items-center space-x-3 mb-10">
-              <span className="h-px w-12 bg-neon/50"></span>
-              <span className="text-xs font-mono text-neon/80 tracking-[0.2em] uppercase">Production Infrastructure</span>
-            </div>
 
             {/* Headline */}
             <h1 className="font-display text-5xl sm:text-6xl lg:text-[5.5rem] font-bold leading-[0.95] tracking-tight text-white mb-8">

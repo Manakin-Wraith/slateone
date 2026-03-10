@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { X, Loader2, ArrowRight, CheckCircle } from 'lucide-react';
-import { createSubscriptionLead, SubscriptionTier } from '../lib/supabase';
+import { X, Loader2, ArrowRight } from 'lucide-react';
+import { createSubscriptionLead, updatePaymentLeadStatus, SubscriptionTier } from '../lib/supabase';
 
 interface TierSelectionModalProps {
   isOpen: boolean;
@@ -9,68 +9,64 @@ interface TierSelectionModalProps {
 }
 
 const TIER_DISPLAY: Record<SubscriptionTier, { name: string; price: string; description: string }> = {
-  development_os: {
-    name: 'Development OS',
-    price: 'R499/mo',
-    description: '1 active project • 2 users • Full script breakdown',
+  single_script: {
+    name: '1 Breakdown',
+    price: 'R500',
+    description: 'Single breakdown • Full production workspace • 6 months active',
   },
-  producer_os: {
-    name: 'Producer OS',
-    price: 'R1,999/mo',
-    description: '3 active projects • 10 users • Full scheduling',
+  pack_5: {
+    name: '5 Breakdown Pack',
+    price: 'R2,000',
+    description: '5 breakdowns • R400/breakdown • 12 months credit validity',
   },
-  studio_os: {
-    name: 'Studio OS',
-    price: 'R3,499/mo',
-    description: 'Unlimited projects • 25 users • Full suite',
+  pack_10: {
+    name: '10 Breakdown Pack',
+    price: 'R3,500',
+    description: '10 breakdowns • R350/breakdown • 12 months credit validity',
+  },
+  pack_25: {
+    name: '25 Breakdown Pack',
+    price: 'R7,500',
+    description: '25 breakdowns • R300/breakdown • 12 months credit validity',
   },
 };
 
 export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, onClose, tier }) => {
-  const [formData, setFormData] = useState({ email: '', name: '', phone: '', company: '' });
+  const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState(false);
 
   const tierInfo = TIER_DISPLAY[tier];
-  const isStudio = tier === 'studio_os';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setIsSubmitting(true);
 
-    // Save lead to DB (best-effort, non-blocking)
-    const result = await createSubscriptionLead({
-      email: formData.email.trim(),
-      name: formData.name.trim(),
-      phone: formData.phone.trim() || undefined,
-      company: formData.company.trim() || undefined,
-      payment_tier: tier,
-      source: 'pricing_section',
-    });
+    try {
+      const result = await createSubscriptionLead({
+        email: email.trim(),
+        payment_tier: tier,
+        source: 'pricing_section',
+      });
 
-    if (isStudio) {
-      // Studio OS: show confirmation (no Yoco redirect)
-      setIsSuccess(true);
-      setIsSubmitting(false);
-    } else if (result.yocoUrl) {
-      // Dev/Producer OS: redirect straight to Yoco payment
-      window.location.href = result.yocoUrl;
-    } else {
-      setError('Could not generate payment link. Please try again.');
+      if (result.success && result.yocoUrl && result.trackingId) {
+        await updatePaymentLeadStatus(result.trackingId, 'redirected');
+        window.location.href = result.yocoUrl;
+      } else {
+        setError('Something went wrong. Please try again.');
+        setIsSubmitting(false);
+      }
+    } catch (err) {
+      console.error('Payment redirect error:', err);
+      setError('An unexpected error occurred. Please try again.');
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
   const handleClose = () => {
-    setFormData({ email: '', name: '', phone: '', company: '' });
+    setEmail('');
     setError(null);
-    setIsSuccess(false);
     onClose();
   };
 
@@ -89,106 +85,61 @@ export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, 
           <X className="w-5 h-5" />
         </button>
 
-        {isSuccess ? (
-          <div className="text-center py-6">
-            <div className="w-14 h-14 rounded-full bg-neon/10 border border-neon/20 flex items-center justify-center mx-auto mb-5">
-              <CheckCircle className="w-7 h-7 text-neon" />
-            </div>
-            <h2 className="text-xl font-display font-bold text-white mb-2">Request Received</h2>
-            <p className="text-sm text-white/40 mb-6">
-              Our team will reach out to schedule your Studio OS onboarding.
+        <>
+          {/* Header */}
+          <div className="mb-6">
+            <p className="text-[10px] font-mono text-neon/60 uppercase tracking-[0.2em] mb-3">
+              Continue to Payment
             </p>
-            <button onClick={handleClose} className="text-sm text-neon hover:text-white transition-colors font-mono uppercase tracking-wider">
-              Close
-            </button>
+            <h2 className="text-xl font-display font-bold text-white mb-1">{tierInfo.name}</h2>
+            <p className="text-sm text-white/30">{tierInfo.description}</p>
           </div>
-        ) : (
-          <>
-            {/* Header */}
-            <div className="mb-6">
-              <p className="text-[10px] font-mono text-neon/60 uppercase tracking-[0.2em] mb-3">
-                {isStudio ? 'Contact Sales' : 'Continue to Payment'}
-              </p>
-              <h2 className="text-xl font-display font-bold text-white mb-1">{tierInfo.name}</h2>
-              <p className="text-sm text-white/30">{tierInfo.description}</p>
-            </div>
 
-            {/* Tier price */}
-            <div className="bg-white/[0.03] border border-white/[0.06] rounded-lg p-4 mb-6 flex items-center justify-between">
-              <span className="text-sm text-white/50">Monthly subscription</span>
-              <span className="text-lg font-bold text-neon">{tierInfo.price}</span>
-            </div>
+          {/* Tier price */}
+          <div className="bg-white/[0.03] border border-white/[0.06] rounded-lg p-4 mb-6 flex items-center justify-between">
+            <span className="text-sm text-white/50">Pack price</span>
+            <span className="text-lg font-bold text-neon">{tierInfo.price}</span>
+          </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <input
-                type="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Email address *"
-                disabled={isSubmitting}
-                className="w-full bg-white/[0.03] border border-white/[0.08] text-white placeholder-white/25 px-4 py-3 rounded-lg focus:outline-none focus:border-neon/40 focus:ring-1 focus:ring-neon/20 transition-all text-sm disabled:opacity-50"
-              />
-              <input
-                type="text"
-                name="name"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Full name *"
-                disabled={isSubmitting}
-                className="w-full bg-white/[0.03] border border-white/[0.08] text-white placeholder-white/25 px-4 py-3 rounded-lg focus:outline-none focus:border-neon/40 focus:ring-1 focus:ring-neon/20 transition-all text-sm disabled:opacity-50"
-              />
-              <input
-                type="text"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-                placeholder="Production company (optional)"
-                disabled={isSubmitting}
-                className="w-full bg-white/[0.03] border border-white/[0.08] text-white placeholder-white/25 px-4 py-3 rounded-lg focus:outline-none focus:border-neon/40 focus:ring-1 focus:ring-neon/20 transition-all text-sm disabled:opacity-50"
-              />
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="Phone (optional)"
-                disabled={isSubmitting}
-                className="w-full bg-white/[0.03] border border-white/[0.08] text-white placeholder-white/25 px-4 py-3 rounded-lg focus:outline-none focus:border-neon/40 focus:ring-1 focus:ring-neon/20 transition-all text-sm disabled:opacity-50"
-              />
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <input
+              type="email"
+              name="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email address"
+              disabled={isSubmitting}
+              className="w-full bg-white/[0.03] border border-white/[0.08] text-white placeholder-white/25 px-4 py-3 rounded-lg focus:outline-none focus:border-neon/40 focus:ring-1 focus:ring-neon/20 transition-all text-sm disabled:opacity-50"
+            />
 
-              {error && (
-                <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-                  <p className="text-red-400 text-sm">{error}</p>
-                </div>
+            {error && (
+              <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+                <p className="text-red-400 text-sm">{error}</p>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-neon text-black font-bold px-6 py-3.5 rounded-lg hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 text-sm tracking-wide uppercase disabled:opacity-50"
+            >
+              {isSubmitting ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <>
+                  Continue to Payment
+                  <ArrowRight className="w-4 h-4" />
+                </>
               )}
+            </button>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-neon text-black font-bold px-6 py-3.5 rounded-lg hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 text-sm tracking-wide uppercase disabled:opacity-50"
-              >
-                {isSubmitting ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <>
-                    {isStudio ? 'Request Access' : 'Continue to Payment'}
-                    <ArrowRight className="w-4 h-4" />
-                  </>
-                )}
-              </button>
-
-              <p className="text-[10px] text-white/15 text-center pt-1">
-                {isStudio
-                  ? 'Our team will contact you within 24 hours.'
-                  : 'You will be redirected to our secure payment provider.'}
-              </p>
-            </form>
-          </>
-        )}
+            <p className="text-[10px] text-white/15 text-center pt-1">
+              You'll be redirected to our secure payment page.
+            </p>
+          </form>
+        </>
       </div>
     </div>
   );

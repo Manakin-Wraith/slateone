@@ -130,32 +130,40 @@ export async function createPaymentLead(leadData: PaymentLeadData) {
   return { success: true, data, yocoUrl, trackingId };
 }
 
-export type SubscriptionTier = 'development_os' | 'producer_os' | 'studio_os';
+export type SubscriptionTier = 'single_script' | 'pack_5' | 'pack_10' | 'pack_25';
 
 export interface SubscriptionLeadData {
   email: string;
-  name: string;
-  phone?: string;
-  company?: string;
   payment_tier: SubscriptionTier;
   source?: string;
 }
 
-const TIER_CONFIG: Record<SubscriptionTier, { dbTier: string; price: number; yocoUrl: string | null }> = {
-  development_os: {
-    dbTier: 'R499',
-    price: 499,
-    yocoUrl: 'https://pay.yoco.com/celebration-house-entertainment?amount=499.00&reference=development-os',
+const YOCO_BASE = 'https://pay.yoco.com/celebration-house-entertainment';
+
+const TIER_CONFIG: Record<SubscriptionTier, { dbTier: string; price: number; amount: string; reference: string }> = {
+  single_script: {
+    dbTier: 'single_script',
+    price: 500,
+    amount: '500.00',
+    reference: '1-Breakdown',
   },
-  producer_os: {
-    dbTier: 'R1999',
-    price: 1999,
-    yocoUrl: 'https://pay.yoco.com/celebration-house-entertainment?amount=1999.00&reference=producer-os',
+  pack_5: {
+    dbTier: 'pack_5',
+    price: 2000,
+    amount: '2000.00',
+    reference: '5-Breakdowns',
   },
-  studio_os: {
-    dbTier: 'R3499',
-    price: 3499,
-    yocoUrl: null, // Studio OS uses contact sales flow
+  pack_10: {
+    dbTier: 'pack_10',
+    price: 3500,
+    amount: '3500.00',
+    reference: '10-Breakdowns',
+  },
+  pack_25: {
+    dbTier: 'pack_25',
+    price: 7500,
+    amount: '7500.00',
+    reference: '25-Breakdowns',
   },
 };
 
@@ -163,21 +171,18 @@ export async function createSubscriptionLead(leadData: SubscriptionLeadData) {
   const trackingId = generateTrackingId();
   const config = TIER_CONFIG[leadData.payment_tier];
   
-  const yocoUrl = config.yocoUrl 
-    ? `${config.yocoUrl}&ref=${trackingId}&email=${encodeURIComponent(leadData.email)}`
-    : null;
+  const yocoUrl = `${YOCO_BASE}?amount=${config.amount}&reference=${encodeURIComponent(config.reference)}&ref=${trackingId}&email=${encodeURIComponent(leadData.email)}`;
 
   try {
     await supabase
       .from('payment_leads')
       .insert([{
         email: leadData.email,
-        name: leadData.name,
-        phone: leadData.phone || null,
+        name: '',
         payment_tier: config.dbTier,
-        yoco_url: yocoUrl || '',
+        yoco_url: yocoUrl,
         tracking_id: trackingId,
-        source: `pricing_${leadData.payment_tier}${leadData.company ? `:${leadData.company}` : ''}`,
+        source: leadData.source || `pricing_${leadData.payment_tier}`,
         status: 'intent'
       }]);
   } catch (e) {

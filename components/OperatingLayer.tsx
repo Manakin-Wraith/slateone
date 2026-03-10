@@ -29,11 +29,6 @@ export const OperatingLayer: React.FC = () => {
     <section className="py-32 bg-charcoal border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Section label */}
-        <div className="inline-flex items-center space-x-3 mb-6">
-          <span className="h-px w-12 bg-neon/50"></span>
-          <span className="text-xs font-mono text-neon/80 tracking-[0.2em] uppercase">The System</span>
-        </div>
 
         <div className="max-w-3xl mb-20">
           <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-6 leading-[1.1]">
