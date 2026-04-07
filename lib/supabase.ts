@@ -130,7 +130,7 @@ export async function createPaymentLead(leadData: PaymentLeadData) {
   return { success: true, data, yocoUrl, trackingId };
 }
 
-export type SubscriptionTier = 'single_script' | 'pack_5' | 'pack_10' | 'pack_25';
+export type SubscriptionTier = 'monthly';
 
 export interface SubscriptionLeadData {
   email: string;
@@ -138,40 +138,11 @@ export interface SubscriptionLeadData {
   source?: string;
 }
 
-const YOCO_BASE = 'https://pay.yoco.com/celebration-house-entertainment';
-
-const TIER_CONFIG: Record<SubscriptionTier, { dbTier: string; price: number; amount: string; reference: string }> = {
-  single_script: {
-    dbTier: 'single_script',
-    price: 500,
-    amount: '500.00',
-    reference: '1-Breakdown',
-  },
-  pack_5: {
-    dbTier: 'pack_5',
-    price: 2000,
-    amount: '2000.00',
-    reference: '5-Breakdowns',
-  },
-  pack_10: {
-    dbTier: 'pack_10',
-    price: 3500,
-    amount: '3500.00',
-    reference: '10-Breakdowns',
-  },
-  pack_25: {
-    dbTier: 'pack_25',
-    price: 7500,
-    amount: '7500.00',
-    reference: '25-Breakdowns',
-  },
-};
+const WISE_PAYMENT_URL = 'https://wise.com/pay/r/8j9W0j5SUuPivxk';
 
 export async function createSubscriptionLead(leadData: SubscriptionLeadData) {
   const trackingId = generateTrackingId();
-  const config = TIER_CONFIG[leadData.payment_tier];
-  
-  const yocoUrl = `${YOCO_BASE}?amount=${config.amount}&reference=${encodeURIComponent(config.reference)}&ref=${trackingId}&email=${encodeURIComponent(leadData.email)}`;
+  const paymentUrl = WISE_PAYMENT_URL;
 
   try {
     await supabase
@@ -179,17 +150,17 @@ export async function createSubscriptionLead(leadData: SubscriptionLeadData) {
       .insert([{
         email: leadData.email,
         name: '',
-        payment_tier: config.dbTier,
-        yoco_url: yocoUrl,
+        payment_tier: 'monthly',
+        yoco_url: paymentUrl,
         tracking_id: trackingId,
-        source: leadData.source || `pricing_${leadData.payment_tier}`,
+        source: leadData.source || 'pricing_monthly',
         status: 'intent'
       }]);
   } catch (e) {
     console.error('Subscription lead save error (non-blocking):', e);
   }
 
-  return { success: true, yocoUrl, trackingId };
+  return { success: true, yocoUrl: paymentUrl, trackingId };
 }
 
 export async function updatePaymentLeadStatus(
