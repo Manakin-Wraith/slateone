@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Hero } from './components/Hero';
 import { IndustryReality } from './components/IndustryReality';
 import { OperatingLayer } from './components/OperatingLayer';
@@ -36,6 +37,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-neon selection:text-black">
+      <Analytics />
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-charcoal/90 backdrop-blur-md border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
