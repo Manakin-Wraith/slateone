@@ -1,5 +1,7 @@
 # Payment Contact Capture Implementation
 
+> **⚠️ SUPERSEDED (2026-07-16).** This document describes the legacy Yoco `R49`/`R249` flow via the `PaymentModal` and `HowItWorks` components, **both of which have been deleted**. The current lead-capture flow (two ZAR tiers → email capture → app signup, with PayFast checkout inside the app) is documented in **`docs/pricing-model-change-spec.md`** and **`docs/changelog/2026-07-16-two-tier-pricing.md`**. Retained below for historical reference only.
+
 ## Overview
 This document describes the modal-based contact capture system implemented before Yoco payment redirects. This enables full conversion funnel tracking and follow-up capabilities.
 

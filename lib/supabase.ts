@@ -87,80 +87,60 @@ async function sendConfirmationEmail(record: any) {
   return response.json();
 }
 
-export interface PaymentLeadData {
-  email: string;
-  name: string;
-  phone?: string;
-  payment_tier: 'R49' | 'R249';
-  source?: string;
-}
-
 function generateTrackingId(): string {
   return `sl_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 }
 
-export async function createPaymentLead(leadData: PaymentLeadData) {
-  const trackingId = generateTrackingId();
-  const yocoBaseUrl = leadData.payment_tier === 'R49' 
-    ? 'https://pay.yoco.com/r/m9jYrx'
-    : 'https://pay.yoco.com/r/mEDpxp';
-  
-  const yocoUrl = `${yocoBaseUrl}?ref=${trackingId}&email=${encodeURIComponent(leadData.email)}`;
+// ── Pricing tiers (2026-07) ──────────────────────────────────────────────
+// tier_1 = Pay-Per-Breakdown (R450 per breakdown)
+// tier_2 = Annual Team License (R1,850/yr + R150 per seat)
+// The landing page captures the email as a lead, then redirects to the app
+// signup page. The app backend maps the `plan` query param to the full
+// signup_plan id (tier_1_pay_per_breakdown / tier_2_annual_team).
+export type PricingTier = 'tier_1' | 'tier_2';
 
-  const { data, error } = await supabase
-    .from('payment_leads')
-    .insert([{
-      email: leadData.email,
-      name: leadData.name,
-      phone: leadData.phone || null,
-      payment_tier: leadData.payment_tier,
-      yoco_url: yocoUrl,
-      tracking_id: trackingId,
-      source: leadData.source || 'how_it_works_section',
-      status: 'intent'
-    }])
-    .select()
-    .single();
+// Headline ZAR amount stored on the lead for analytics (not a charge here).
+const TIER_PRICE: Record<PricingTier, number> = {
+  tier_1: 450,
+  tier_2: 1850,
+};
 
-  if (error) {
-    console.error('Payment lead creation error:', error);
-    return { success: false, error: error.message };
-  }
+// Where the CTA sends the user to complete signup on the product app.
+const APP_SIGNUP_BASE_URL = 'https://app.slateone.studio/login';
 
-  return { success: true, data, yocoUrl, trackingId };
-}
-
-export type SubscriptionTier = 'monthly';
-
-export interface SubscriptionLeadData {
+export interface PricingLeadData {
   email: string;
-  payment_tier: SubscriptionTier;
+  tier: PricingTier;
   source?: string;
 }
 
-const WISE_PAYMENT_URL = 'https://wise.com/pay/r/8j9W0j5SUuPivxk';
-
-export async function createSubscriptionLead(leadData: SubscriptionLeadData) {
+export async function createPricingLead(leadData: PricingLeadData) {
   const trackingId = generateTrackingId();
-  const paymentUrl = WISE_PAYMENT_URL;
+  const source = leadData.source || 'pricing_section';
 
-  try {
-    await supabase
-      .from('payment_leads')
-      .insert([{
-        email: leadData.email,
-        name: '',
-        payment_tier: 'monthly',
-        yoco_url: paymentUrl,
-        tracking_id: trackingId,
-        source: leadData.source || 'pricing_monthly',
-        status: 'intent'
-      }]);
-  } catch (e) {
-    console.error('Subscription lead save error (non-blocking):', e);
+  const signupUrl =
+    `${APP_SIGNUP_BASE_URL}?mode=signup&plan=${leadData.tier}` +
+    `&source=${encodeURIComponent(source)}&ref=${trackingId}`;
+
+  // Lead capture is best-effort; a save failure must not block the redirect.
+  const { error } = await supabase
+    .from('payment_leads')
+    .insert([{
+      email: leadData.email,
+      name: '',
+      payment_tier: leadData.tier,
+      tier_price: TIER_PRICE[leadData.tier],
+      yoco_url: signupUrl,
+      tracking_id: trackingId,
+      source,
+      status: 'intent',
+    }]);
+
+  if (error) {
+    console.error('Pricing lead save error (non-blocking):', error.message);
   }
 
-  return { success: true, yocoUrl: paymentUrl, trackingId };
+  return { success: true, signupUrl, trackingId };
 }
 
 export async function updatePaymentLeadStatus(

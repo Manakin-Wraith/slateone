@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
 import { X, Loader2, ArrowRight } from 'lucide-react';
-import { createSubscriptionLead, updatePaymentLeadStatus, SubscriptionTier } from '../lib/supabase';
+import { createPricingLead, updatePaymentLeadStatus, PricingTier } from '../lib/supabase';
 
 interface TierSelectionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  tier: SubscriptionTier;
+  tier: PricingTier;
 }
+
+const TIER_DETAILS: Record<PricingTier, { name: string; tagline: string; priceLabel: string; price: string }> = {
+  tier_1: {
+    name: 'Pay-Per-Breakdown',
+    tagline: 'Unlimited uploads · Pay only when you run a breakdown',
+    priceLabel: 'Per breakdown',
+    price: 'R450',
+  },
+  tier_2: {
+    name: 'Annual Team License',
+    tagline: 'Unlimited breakdowns · Full team collaboration',
+    priceLabel: 'Annual license',
+    price: 'R1,850/yr + R150/seat',
+  },
+};
 
 export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, onClose, tier }) => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const details = TIER_DETAILS[tier];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,21 +36,21 @@ export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, 
     setIsSubmitting(true);
 
     try {
-      const result = await createSubscriptionLead({
+      const result = await createPricingLead({
         email: email.trim(),
-        payment_tier: tier,
+        tier,
         source: 'pricing_section',
       });
 
-      if (result.success && result.yocoUrl && result.trackingId) {
+      if (result.success && result.signupUrl && result.trackingId) {
         await updatePaymentLeadStatus(result.trackingId, 'redirected');
-        window.location.href = result.yocoUrl;
+        window.location.href = result.signupUrl;
       } else {
         setError('Something went wrong. Please try again.');
         setIsSubmitting(false);
       }
     } catch (err) {
-      console.error('Payment redirect error:', err);
+      console.error('Signup redirect error:', err);
       setError('An unexpected error occurred. Please try again.');
       setIsSubmitting(false);
     }
@@ -50,7 +67,7 @@ export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
       <div className="relative bg-[#111] border border-white/[0.08] rounded-xl max-w-md w-full p-8 shadow-2xl">
-        
+
         {/* Close */}
         <button
           onClick={handleClose}
@@ -63,16 +80,16 @@ export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, 
         {/* Header */}
         <div className="mb-6">
           <p className="text-[10px] font-mono text-neon/60 uppercase tracking-[0.2em] mb-3">
-            Continue to Payment
+            Continue to Signup
           </p>
-          <h2 className="text-xl font-display font-bold text-white mb-1">Monthly Plan</h2>
-          <p className="text-sm text-white/30">Unlimited breakdowns &middot; Full production infrastructure</p>
+          <h2 className="text-xl font-display font-bold text-white mb-1">{details.name}</h2>
+          <p className="text-sm text-white/30">{details.tagline}</p>
         </div>
 
         {/* Price */}
         <div className="bg-white/[0.03] border border-white/[0.06] rounded-lg p-4 mb-6 flex items-center justify-between">
-          <span className="text-sm text-white/50">Monthly subscription</span>
-          <span className="text-lg font-bold text-neon">$49/mo</span>
+          <span className="text-sm text-white/50">{details.priceLabel}</span>
+          <span className="text-lg font-bold text-neon">{details.price}</span>
         </div>
 
         {/* Form */}
@@ -103,14 +120,14 @@ export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, 
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
               <>
-                Continue to Payment
+                Continue to Signup
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
 
           <p className="text-[10px] text-white/15 text-center pt-1">
-            You'll be redirected to our secure payment page.
+            You'll be taken to app.slateone.studio to create your account.
           </p>
         </form>
       </div>

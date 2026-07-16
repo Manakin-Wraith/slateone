@@ -128,32 +128,35 @@ Indie filmmakers · Production companies · Studios · Producers · Line produce
 ## 8. Pricing
 
 ### Model
-No subscriptions. No monthly commitments. Pay-per-use breakdown packs. Volume discounts reward heavy users.
+Two tiers, priced in ZAR. Uploading and editing scripts is always free — you only pay when you run a breakdown. Individuals pay per breakdown; teams license the whole crew for the year.
 
-### Breakdown Packs
+### Tiers
 
-| Pack | Price | Per Breakdown | Credit Validity |
-|------|-------|---------------|-----------------|
-| 1 Breakdown | R500 | R500 | 6 months |
-| 5 Breakdowns | R2,000 | R400 | 12 months |
-| **10 Breakdowns** ⭐ Best Value | **R3,500** | **R350** | **12 months** |
-| 25 Breakdowns | R7,500 | R300 | 12 months |
+| Tier | Price | Billing | Best for |
+|------|-------|---------|----------|
+| **Pay-Per-Breakdown** | **R450** / breakdown | Pay as you go | Freelancers, individual writers, small producers |
+| **Annual Team License** ⭐ | **R1,850** / year + **R150** per seat | Annual, paid upfront | Production companies, ADs, producers, department heads |
 
 ### What Every Breakdown Includes
-- Full AI breakdown
-- Props / characters / locations extraction
-- Full production workspace
-- Production scheduling
-- Stripboards & Kanban visualization
-- Department reports (PDF / CSV)
-- Unlimited collaborators per project
-- 6 months active project access
+- Full breakdown extraction (cast, props, wardrobe, vehicles, makeup & hair, SFX, sound, atmosphere)
+- Scene & story-day management
+- Narrative & scene intelligence
+- Zoomable stripboard scheduling
+- All production reports & exports
+
+### Team License Adds
+- Invite crew members (R150 per seat, paid by the account owner)
+- Department workspaces
+- Cross-department threads
+- Department item tracking & notes
+- Team access control & invites
+- Unlimited breakdowns for the owner and all paid seats
 
 ### Pricing Copy
-> Purchase credits upfront. Use them when you're ready. Each credit unlocks a full AI breakdown with 6 months of active project access. Unused credits valid for up to 12 months on packs.
+> Upload as many scripts as you like — free. Run a breakdown when you're ready: R450 each, or go unlimited for your whole team on the R1,850/year Team License.
 
 ### Anti-Objection Copy
-> No feature tiers. No per-seat charges. Every breakdown unlocks the complete SlateOne system for that project.
+> No lock-in. Uploads and manual scene work are always free. On the Team License, one owner covers every seat, so inviting your crew is one click — no per-member checkout.
 
 ---
 
@@ -163,7 +166,7 @@ No subscriptions. No monthly commitments. Pay-per-use breakdown packs. Volume di
 |-----|---------|--------|
 | **View Pricing** | Hero, primary | Scrolls to pricing section |
 | **Book a Production Demo** | Hero, secondary | mailto:hello@slateone.studio?subject=Production Demo Request |
-| **Buy Now** | Pricing cards | Opens payment flow → Yoco checkout |
+| **Get Started** | Pricing cards | Email capture → redirect to app.slateone.studio signup with plan param (tier_1 / tier_2) |
 | **Login** | Nav bar | https://app.slateone.studio/login?mode=login |
 
 ---
