@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Hero } from './components/Hero';
 import { IndustryReality } from './components/IndustryReality';
 import { OperatingLayer } from './components/OperatingLayer';
-import { SystemArchitecture } from './components/SystemArchitecture';
 import { BuiltFor } from './components/BuiltFor';
 import { Pricing } from './components/Pricing';
 import { Footer } from './components/Footer';
@@ -35,31 +34,31 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans selection:bg-neon selection:text-black">
+    <div className="min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-slate-900">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-charcoal/90 backdrop-blur-md border-b border-white/5">
+      <nav className="fixed top-0 w-full z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div 
-              className="flex items-center cursor-pointer group" 
+            <div
+              className="flex items-center cursor-pointer group"
               onClick={handleLogoClick}
             >
-              <Film className="h-5 w-5 text-neon mr-2" />
-              <span className="font-display font-bold text-xl tracking-tight text-white">
-                Slate<span className="text-neon">One</span>
+              <Film className="h-5 w-5 text-amber-500 mr-2" />
+              <span className="font-bold text-xl tracking-tight text-slate-50">
+                Slate<span className="text-amber-500">One</span>
               </span>
             </div>
             <div className="flex items-center gap-4">
-              <a 
+              <a
                 href="#pricing"
                 onClick={(e) => { e.preventDefault(); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }); }}
-                className="hidden sm:inline-block text-xs font-mono text-white/40 hover:text-neon transition-colors tracking-wider uppercase cursor-pointer"
+                className="hidden sm:inline-block text-sm text-slate-400 hover:text-amber-500 transition-colors cursor-pointer"
               >
                 Pricing
               </a>
-              <a 
+              <a
                 href="https://app.slateone.studio/login?mode=login"
-                className="text-sm font-medium bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-white/70 hover:text-neon hover:border-neon/50 transition-all"
+                className="text-sm font-medium bg-slate-800 border border-slate-700 px-4 py-2 rounded-lg text-slate-300 hover:text-amber-500 hover:border-amber-500/50 transition-all"
               >
                 Login
               </a>
@@ -75,7 +74,6 @@ const App: React.FC = () => {
             <Hero />
             <IndustryReality />
             <OperatingLayer />
-            <SystemArchitecture />
             <BuiltFor />
             <Pricing />
             <Footer />
@@ -88,18 +86,18 @@ const App: React.FC = () => {
       </main>
 
       {/* Legal footer bar */}
-      <div className="bg-black text-white/20 text-xs py-4 text-center border-t border-white/5">
+      <div className="bg-slate-950 text-slate-600 text-xs py-4 text-center border-t border-slate-800">
         <p>&copy; {new Date().getFullYear()} SlateOne. Production Infrastructure for Film & TV.</p>
         <div className="mt-2 space-x-4">
-          <button 
+          <button
             onClick={handlePrivacyPolicyClick}
-            className="hover:text-white/50 transition-colors"
+            className="hover:text-slate-300 transition-colors"
           >
             Privacy Policy
           </button>
-          <button 
+          <button
             onClick={handleTermsOfServiceClick}
-            className="hover:text-white/50 transition-colors"
+            className="hover:text-slate-300 transition-colors"
           >
             Terms of Service
           </button>
