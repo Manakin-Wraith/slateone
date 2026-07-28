@@ -10,29 +10,28 @@ const painPoints = [
 
 export const IndustryReality: React.FC = () => {
   return (
-    <section className="py-32 bg-black border-b border-white/5">
+    <section className="py-32 bg-slate-950 border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-
         <div className="grid lg:grid-cols-2 gap-16 items-start">
-          
+
           {/* Left: Statement */}
           <div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-8 leading-[1.1]">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-50 mb-8 leading-[1.1]">
               The Way Productions<br/>Still Operate
             </h2>
-            <p className="text-lg text-white/40 leading-relaxed max-w-lg">
-              Most productions still rely on disconnected systems — spreadsheets for breakdown, 
-              PDFs for reports, chat apps for coordination. The result is friction at every stage 
+            <p className="text-lg text-slate-400 leading-relaxed max-w-lg">
+              Most productions still rely on disconnected systems — spreadsheets for breakdown,
+              PDFs for reports, chat apps for coordination. The result is friction at every stage
               of production.
             </p>
-            
+
             {/* Consequence block */}
-            <div className="mt-10 border-l-2 border-white/10 pl-6">
-              <p className="text-sm text-white/30 uppercase tracking-widest font-mono mb-3">The Cost</p>
+            <div className="mt-10 border-l-2 border-slate-700 pl-6">
+              <p className="text-sm text-slate-500 uppercase tracking-widest font-mono mb-3">The Cost</p>
               <div className="flex flex-wrap gap-3">
                 {['Administrative drag', 'Data duplication', 'Version confusion', 'Lost time', 'Operational risk'].map((item) => (
-                  <span key={item} className="text-xs text-white/50 bg-white/[0.03] border border-white/[0.06] px-3 py-1.5 rounded font-mono">
+                  <span key={item} className="text-xs text-slate-400 bg-slate-800 border border-slate-700 px-3 py-1.5 rounded font-mono">
                     {item}
                   </span>
                 ))}
@@ -43,14 +42,12 @@ export const IndustryReality: React.FC = () => {
           {/* Right: Pain points */}
           <div className="space-y-0">
             {painPoints.map((point, i) => (
-              <div key={i} className="group border-b border-white/[0.06] py-6 first:pt-0 last:border-b-0">
+              <div key={i} className="group border-b border-slate-800 py-6 first:pt-0 last:border-b-0">
                 <div className="flex items-start gap-4">
-                  <span className="text-xs font-mono text-white/20 mt-1 w-6 flex-shrink-0">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
+                  <span className="w-2 h-2 rounded-full bg-amber-500/40 mt-2 flex-shrink-0 group-hover:bg-amber-500 transition-colors" />
                   <div>
-                    <p className="text-white/80 font-medium mb-1">{point.label}</p>
-                    <p className="text-sm text-white/30">{point.detail}</p>
+                    <p className="text-slate-200 font-medium mb-1">{point.label}</p>
+                    <p className="text-sm text-slate-500">{point.detail}</p>
                   </div>
                 </div>
               </div>
