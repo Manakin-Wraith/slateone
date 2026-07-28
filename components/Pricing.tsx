@@ -139,12 +139,28 @@ export const Pricing: React.FC = () => {
                     {tier.badge}
                   </span>
                   <h3 className="text-xl font-bold text-slate-50 mb-4">{tier.name}</h3>
-                  <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-5xl font-bold text-slate-50">{tier.price}</span>
-                    <span className="text-base text-slate-500 font-mono">{tier.priceUnit}</span>
-                  </div>
-                  {tier.priceNote && (
-                    <p className="text-sm text-amber-500/70 font-mono mb-3">{tier.priceNote}</p>
+
+                  {tier.priceNote ? (
+                    <div className="space-y-2 mb-1">
+                      <div className="flex items-baseline justify-between gap-2">
+                        <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500">License</span>
+                        <span className="flex items-baseline gap-1">
+                          <span className="text-3xl font-bold text-slate-50">{tier.price}</span>
+                          <span className="text-sm text-slate-500 font-mono">{tier.priceUnit}</span>
+                        </span>
+                      </div>
+                      <div className="flex items-baseline justify-between gap-2 pt-2 border-t border-dashed border-slate-700">
+                        <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500">+ Seats</span>
+                        <span className="flex items-baseline gap-1">
+                          <span className="text-xl font-bold text-amber-500">{tier.priceNote.replace('+ ', '')}</span>
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-baseline gap-1 mb-1">
+                      <span className="text-5xl font-bold text-slate-50">{tier.price}</span>
+                      <span className="text-base text-slate-500 font-mono">{tier.priceUnit}</span>
+                    </div>
                   )}
                   <p className="text-slate-400 text-sm mt-3">{tier.tagline}</p>
                 </div>

@@ -8,7 +8,7 @@ interface TierSelectionModalProps {
   tier: PricingTier;
 }
 
-const TIER_DETAILS: Record<PricingTier, { name: string; tagline: string; priceLabel: string; price: string }> = {
+const TIER_DETAILS: Record<PricingTier, { name: string; tagline: string; priceLabel: string; price: string; seatLabel?: string; seatPrice?: string }> = {
   tier_1: {
     name: 'Pay-Per-Breakdown',
     tagline: 'Unlimited uploads · Pay only when you run a breakdown',
@@ -19,7 +19,9 @@ const TIER_DETAILS: Record<PricingTier, { name: string; tagline: string; priceLa
     name: 'Annual Team License',
     tagline: 'Unlimited breakdowns · Full team collaboration',
     priceLabel: 'Annual license',
-    price: 'R1,850/yr + R150/seat',
+    price: 'R1,850/yr',
+    seatLabel: '+ Per seat',
+    seatPrice: 'R150/seat',
   },
 };
 
@@ -87,9 +89,17 @@ export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, 
         </div>
 
         {/* Price */}
-        <div className="bg-slate-700 border border-slate-600 rounded-lg p-4 mb-6 flex items-center justify-between">
-          <span className="text-sm text-slate-300">{details.priceLabel}</span>
-          <span className="text-lg font-bold text-amber-500">{details.price}</span>
+        <div className="bg-slate-700 border border-slate-600 rounded-lg p-4 mb-6 divide-y divide-slate-600/70">
+          <div className="flex items-center justify-between pb-3">
+            <span className="text-sm text-slate-300">{details.priceLabel}</span>
+            <span className="text-lg font-bold text-slate-50">{details.price}</span>
+          </div>
+          {details.seatLabel && details.seatPrice && (
+            <div className="flex items-center justify-between pt-3">
+              <span className="text-sm text-slate-300">{details.seatLabel}</span>
+              <span className="text-lg font-bold text-amber-500">{details.seatPrice}</span>
+            </div>
+          )}
         </div>
 
         {/* Form */}
