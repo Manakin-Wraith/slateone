@@ -5,63 +5,67 @@ const capabilities = [
   {
     icon: <FileText className="w-5 h-5" />,
     title: 'Script → Structured Data',
-    description: 'Scripts are converted into structured production data — scenes, cast, props, locations, FX, wardrobe, and vehicles extracted and classified automatically.',
+    description: 'Your script is converted into structured production data — scenes, cast, props, locations, FX, wardrobe, and vehicles extracted and classified automatically.',
   },
   {
     icon: <BarChart3 className="w-5 h-5" />,
     title: 'Breakdown → Dynamic Reports',
-    description: 'Reports generated dynamically from production data. No static PDFs. Revisions propagate instantly across every report and view.',
+    description: 'Reports generate directly from your breakdown data — no static PDFs to redo by hand. When a revision drops, every report and view updates with it.',
   },
   {
     icon: <LayoutGrid className="w-5 h-5" />,
-    title: 'Visualization → Kanban Control',
-    description: 'Production elements visualized by story day, location, and character. Kanban boards provide operational clarity across departments.',
+    title: 'Visualization → Stripboard Control',
+    description: 'See your production by story day, location, and character on a zoomable stripboard — one shared view your whole team can work from.',
   },
   {
     icon: <Calendar className="w-5 h-5" />,
-    title: 'Scheduling → Connected Intelligence',
-    description: 'Scheduling connected directly to breakdown data. Changes in one propagate to the other. One system controlling production flow.',
+    title: 'Scheduling → Connected to Breakdown',
+    description: 'Your shooting schedule stays connected to the breakdown it came from — change one and the other reflects it, instead of drifting apart in separate spreadsheets.',
   },
 ];
 
 export const OperatingLayer: React.FC = () => {
   return (
-    <section className="py-32 bg-charcoal border-b border-white/5">
+    <section className="py-32 bg-slate-900 border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-
         <div className="max-w-3xl mb-20">
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-6 leading-[1.1]">
-            A Production<br/>Operating Layer
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-50 mb-6 leading-[1.1]">
+            From Script to<br/>Shooting Schedule
           </h2>
-          <p className="text-lg text-white/40 leading-relaxed">
-            SlateOne is not a script analyzer. Not a breakdown app. Not a scheduling tool. 
-            It is the production infrastructure that consolidates, transforms, and centralizes 
-            every operational workflow into a single source of production truth.
+          <p className="text-lg text-slate-400 leading-relaxed">
+            SlateOne isn't a script analyzer, a breakdown app, and a scheduling tool bolted
+            together — it's one system that takes your script all the way to a shootable
+            schedule, with everything staying connected along the way.
           </p>
         </div>
 
         {/* Capability grid */}
-        <div className="grid md:grid-cols-2 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
+        <div className="grid md:grid-cols-2 gap-px bg-slate-800 border border-slate-800 rounded-xl overflow-hidden">
           {capabilities.map((cap, i) => (
-            <div key={i} className="bg-charcoal p-10 group hover:bg-white/[0.02] transition-colors duration-300">
+            <div key={i} className="bg-slate-900 p-10 group hover:bg-slate-800/60 transition-colors duration-300">
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-lg bg-neon/10 border border-neon/20 flex items-center justify-center text-neon group-hover:bg-neon/20 transition-colors">
+                <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 group-hover:bg-amber-500/20 transition-colors">
                   {cap.icon}
                 </div>
-                <span className="text-[10px] font-mono text-white/20 uppercase tracking-widest">
+                <span className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">
                   {String(i + 1).padStart(2, '0')}
                 </span>
               </div>
-              <h3 className="text-xl font-display font-bold text-white mb-3">
+              <h3 className="text-xl font-bold text-slate-50 mb-3">
                 {cap.title}
               </h3>
-              <p className="text-sm text-white/40 leading-relaxed">
+              <p className="text-sm text-slate-400 leading-relaxed">
                 {cap.description}
               </p>
             </div>
           ))}
         </div>
+
+        {/* Reinforcement line — folded in from the retired SystemArchitecture section */}
+        <p className="mt-12 text-center text-sm text-slate-500 font-mono tracking-widest uppercase">
+          One script in. One connected system out.
+        </p>
 
       </div>
     </section>

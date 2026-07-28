@@ -20,3 +20,6 @@ dist/
 
 # Vite
 *.local
+
+# Claude worktrees (scratch, per-plan isolated workspaces)
+.worktrees/
