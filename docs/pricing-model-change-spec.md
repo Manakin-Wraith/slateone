@@ -227,7 +227,7 @@ The actual application backend is **not in this repo**. Based on `docs/free-tria
 
 | # | Purpose | Tier | Amount (ZAR) | PayFast type | Recurring | Shareable link |
 |---|---------|------|--------------|--------------|-----------|----------------|
-| 1 | Pay-Per-Breakdown | `tier_1` | 450 | One-off (`_paynow`) | No | `https://payf.st/mjg3x` |
+| 1 | Pay-Per-Breakdown | `tier_1` | 450 | One-off (`_paynow`) | No | `https://payf.st/2s46n` |
 | 2 | Member Seat | `tier_2` (`type=seats`) | 150 × quantity | One-off (`_paynow`) | No | `https://payf.st/2egtc` |
 | 3 | Annual Team License | `tier_2` | 1,850 | Subscription (`subscription_type=1`) | Yes | `https://payf.st/8crta` |
 
@@ -260,24 +260,54 @@ Amounts/params source of truth is §6.1–6.2; regenerate these from the PayFast
 **Charge 1 — Pay-Per-Breakdown (Tier 1) — email link**
 
 ```html
-<a href="https://payment.payfast.io/eng/process?cmd=_paynow&receiver=33568687&item_name=Tier+1&email_confirmation=1&confirmation_address=hello@slateone.studio&item_description=Pay-Per-Breakdown&return_url=https://app.slateone.studio/payment/success?plan=tier_1&cancel_url=https://app.slateone.studio/payment/cancel?plan=tier_1&notify_url=https://api.slateone.studio/api/payfast/notify?plan=tier_1&amount=450">Buy Now</a>
+<a href="https://payment.payfast.io/eng/process?cmd=_paynow&receiver=33568687&item_name=Tier+1+Solo&email_confirmation=1&confirmation_address=hello@slateone.studio&item_description=Pay+-Per-Breakdown&return_url=https://app.slateone.studio/payment/success?plan=tier_1&cancel_url=https://app.slateone.studio/payment/cancel?plan=tier_1&notify_url=https://api.slateone.studio/api/payfast/notify?plan=tier_1&amount=450">Buy Now</a>
 ```
 
 **Charge 1 — button form**
 
 ```html
-<form name="PayFastPayNowForm" action="https://payment.payfast.io/eng/process" method="post">
+ <script type="text/javascript">
+function customQuantitiesPayFast (formReference) {
+formReference['amount'].value = formReference['amount'].value * formReference['custom_quantity'].value;
+return true;
+}
+</script>
+ <script type="text/javascript">
+function actionPayFastJavascript ( formReference ) {
+let shippingValidOrOff = typeof shippingValid !== 'undefined' ? shippingValid : true; 
+let customValid = shippingValidOrOff ? customQuantitiesPayFast( formReference ) : false;
+ if (typeof shippingValid !== 'undefined' && !shippingValid) {
+return false;
+}
+if (typeof customValid !== 'undefined' && !customValid) {
+return false;
+}
+return true;
+ }
+</script>
+<form onsubmit="return actionPayFastJavascript( this );" name="PayFastPayNowForm" action="https://payment.payfast.io/eng/process" method="post">
 <input required type="hidden" name="cmd" value="_paynow">
 <input required type="hidden" name="receiver" pattern="[0-9]" value="33568687">
 <input type="hidden" name="return_url" value="https://app.slateone.studio/payment/success?plan=tier_1">
 <input type="hidden" name="cancel_url" value="https://app.slateone.studio/payment/cancel?plan=tier_1">
 <input type="hidden" name="notify_url" value="https://api.slateone.studio/api/payfast/notify?plan=tier_1">
 <input required type="hidden" name="amount" value="450">
-<input required type="hidden" name="item_name" maxlength="255" value="Tier 1">
-<input type="hidden" name="item_description" maxlength="255" value="Pay-Per-Breakdown">
-<table><tr><td colspan=2 align=center>
+<table>
+<tr>
+<td><label for="custom_quantity">Quantity: </label></td>
+<td><input required id="custom_quantity" type="number" name="custom_quantity" value="1"></td>
+</tr>
+</table>
+
+<input required type="hidden" name="item_name" maxlength="255" value="Tier 1 Solo">
+<input type="hidden" name="item_description" maxlength="255" value="Pay -Per-Breakdown">
+<table>
+<tr>
+<td colspan=2 align=center>
 <input type="image" src="https://my.payfast.io/images/buttons/BuyNow/Light-Small-BuyNow.png" alt="Buy Now" title="Buy Now with Payfast">
-</td></tr></table>
+</td>
+</tr>
+</table>
 </form>
 ```
 
