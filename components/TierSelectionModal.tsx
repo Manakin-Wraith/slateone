@@ -1,36 +1,64 @@
 import React, { useState } from 'react';
 import { X, Loader2, ArrowRight } from 'lucide-react';
-import { createPricingLead, updatePaymentLeadStatus, PricingTier } from '../lib/supabase';
+import { BillingPeriod, createPricingLead, updatePaymentLeadStatus, PricingTier } from '../lib/supabase';
 
 interface TierSelectionModalProps {
   isOpen: boolean;
   onClose: () => void;
   tier: PricingTier;
+  billingPeriod?: BillingPeriod;
 }
 
-const TIER_DETAILS: Record<PricingTier, { name: string; tagline: string; priceLabel: string; price: string; seatLabel?: string; seatPrice?: string }> = {
+interface TierDetail {
+  name: string;
+  tagline: string;
+  priceLabel: string;
+  price: string;
+  seatLabel?: string;
+  seatPrice?: string;
+}
+
+const TIER_DETAILS: Record<PricingTier, Record<BillingPeriod, TierDetail>> = {
   tier_1: {
-    name: 'Pay-Per-Breakdown',
-    tagline: 'Unlimited uploads · Pay only when you run a breakdown',
-    priceLabel: 'Per breakdown',
-    price: 'R450',
+    monthly: {
+      name: 'Pay-Per-Breakdown',
+      tagline: 'Unlimited uploads · Pay only when you run a breakdown',
+      priceLabel: 'Per breakdown',
+      price: 'R450',
+    },
+    annual: {
+      name: 'Pay-Per-Breakdown',
+      tagline: 'Unlimited uploads · Pay only when you run a breakdown',
+      priceLabel: 'Per breakdown',
+      price: 'R450',
+    },
   },
   tier_2: {
-    name: 'Annual Team License',
-    tagline: 'Unlimited breakdowns · Full team collaboration',
-    priceLabel: 'Annual license',
-    price: 'R1,850/yr',
-    seatLabel: '+ Per seat',
-    seatPrice: 'R150/seat',
+    monthly: {
+      name: 'Team License',
+      tagline: 'Unlimited breakdowns · Full team collaboration',
+      priceLabel: 'Monthly license',
+      price: 'R1,850/mo',
+      seatLabel: '+ Per seat',
+      seatPrice: 'R150/mo',
+    },
+    annual: {
+      name: 'Team License',
+      tagline: 'Unlimited breakdowns · Full team collaboration',
+      priceLabel: 'Annual license (2 months free)',
+      price: 'R18,500/yr',
+      seatLabel: '+ Per seat',
+      seatPrice: 'R1,500/yr',
+    },
   },
 };
 
-export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, onClose, tier }) => {
+export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, onClose, tier, billingPeriod = 'monthly' }) => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const details = TIER_DETAILS[tier];
+  const details = TIER_DETAILS[tier][billingPeriod];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,6 +69,7 @@ export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, 
       const result = await createPricingLead({
         email: email.trim(),
         tier,
+        billingPeriod,
         source: 'pricing_section',
       });
 
