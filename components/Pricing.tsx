@@ -38,7 +38,7 @@ const TIERS: TierConfig[] = [
     id: 'tier_1',
     badge: 'Solo',
     name: 'Pay-Per-Breakdown',
-    price: 'R450',
+    price: 'R2,250',
     priceUnit: '/ breakdown',
     tagline: 'For individual filmmakers. Pay only when you run a breakdown.',
     features: [
@@ -59,17 +59,17 @@ const TIERS: TierConfig[] = [
     name: 'Team License',
     price: 'R1,850',
     priceUnit: '/ month',
-    priceNote: '+ R150 per seat / mo',
+    priceNote: '+ R250 per seat / mo',
     billing: {
       monthly: {
         price: 'R1,850',
         priceUnit: '/ month',
-        priceNote: '+ R150 per seat / mo',
+        priceNote: '+ R250 per seat / mo',
       },
       annual: {
         price: 'R18,500',
         priceUnit: '/ year',
-        priceNote: '+ R1,500 per seat / yr',
+        priceNote: '+ R2,500 per seat / yr',
         savingsBadge: '2 months free',
       },
     },
@@ -96,7 +96,7 @@ const TIERS: TierConfig[] = [
 
 export const Pricing: React.FC = () => {
   const [selectedTier, setSelectedTier] = useState<PricingTier | null>(null);
-  const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly');
+  const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('annual');
 
   return (
     <section id="pricing" className="bg-slate-950 relative overflow-hidden">

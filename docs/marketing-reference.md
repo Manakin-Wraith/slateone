@@ -134,8 +134,8 @@ Two tiers, priced in ZAR. Uploading and editing scripts is always free — you o
 
 | Tier | Price | Billing | Best for |
 |------|-------|---------|----------|
-| **Pay-Per-Breakdown** | **R450** / breakdown | Pay as you go | Freelancers, individual writers, small producers |
-| **Annual Team License** ⭐ | **R1,850** / year + **R150** per seat | Annual, paid upfront | Production companies, ADs, producers, department heads |
+| **Pay-Per-Breakdown** | **R2,250** / breakdown | Pay as you go | Freelancers, individual writers, small producers |
+| **Team License** ⭐ | **R1,850** / month + **R250** per seat / mo, or **R18,500** / year + **R2,500** per seat / yr (2 months free) | Monthly or annual | Production companies, ADs, producers, department heads |
 
 ### What Every Breakdown Includes
 - Full breakdown extraction (cast, props, wardrobe, vehicles, makeup & hair, SFX, sound, atmosphere)
@@ -145,7 +145,7 @@ Two tiers, priced in ZAR. Uploading and editing scripts is always free — you o
 - All production reports & exports
 
 ### Team License Adds
-- Invite crew members (R150 per seat, paid by the account owner)
+- Invite crew members (R250/mo or R2,500/yr per seat, paid by the account owner)
 - Department workspaces
 - Cross-department threads
 - Department item tracking & notes
@@ -153,7 +153,7 @@ Two tiers, priced in ZAR. Uploading and editing scripts is always free — you o
 - Unlimited breakdowns for the owner and all paid seats
 
 ### Pricing Copy
-> Upload as many scripts as you like — free. Run a breakdown when you're ready: R450 each, or go unlimited for your whole team on the R1,850/year Team License.
+> Upload as many scripts as you like — free. Run a breakdown when you're ready: R2,250 each, or go unlimited for your whole team on the R1,850/month Team License.
 
 ### Anti-Objection Copy
 > No lock-in. Uploads and manual scene work are always free. On the Team License, one owner covers every seat, so inviting your crew is one click — no per-member checkout.

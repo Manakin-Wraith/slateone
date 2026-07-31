@@ -92,9 +92,9 @@ function generateTrackingId(): string {
 }
 
 // ── Pricing tiers (2026-07) ──────────────────────────────────────────────
-// tier_1 = Pay-Per-Breakdown (R450 per breakdown)
-// tier_2 = Team License (R1,850/mo + R150/seat/mo, or R18,500/yr +
-//          R1,500/seat/yr billed annually — 2 months free vs. monthly)
+// tier_1 = Pay-Per-Breakdown (R2,250 per breakdown)
+// tier_2 = Team License (R1,850/mo + R250/seat/mo, or R18,500/yr +
+//          R2,500/seat/yr billed annually — 2 months free vs. monthly)
 // The landing page captures the email as a lead, then redirects to the app
 // signup page. The app backend maps the `plan` query param to the full
 // signup_plan id (tier_1_pay_per_breakdown / tier_2_team), and the
@@ -105,7 +105,7 @@ export type BillingPeriod = 'monthly' | 'annual';
 // Headline ZAR amount stored on the lead for analytics (not a charge here).
 // tier_1 has no billing period; tier_2 varies by monthly vs. annual billing.
 const TIER_PRICE: Record<PricingTier, Partial<Record<BillingPeriod, number>>> = {
-  tier_1: { monthly: 450 },
+  tier_1: { monthly: 2250 },
   tier_2: { monthly: 1850, annual: 18500 },
 };
 

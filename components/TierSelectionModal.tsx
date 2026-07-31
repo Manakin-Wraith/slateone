@@ -24,13 +24,13 @@ const TIER_DETAILS: Record<PricingTier, Record<BillingPeriod, TierDetail>> = {
       name: 'Pay-Per-Breakdown',
       tagline: 'Unlimited uploads · Pay only when you run a breakdown',
       priceLabel: 'Per breakdown',
-      price: 'R450',
+      price: 'R2,250',
     },
     annual: {
       name: 'Pay-Per-Breakdown',
       tagline: 'Unlimited uploads · Pay only when you run a breakdown',
       priceLabel: 'Per breakdown',
-      price: 'R450',
+      price: 'R2,250',
     },
   },
   tier_2: {
@@ -40,7 +40,7 @@ const TIER_DETAILS: Record<PricingTier, Record<BillingPeriod, TierDetail>> = {
       priceLabel: 'Monthly license',
       price: 'R1,850/mo',
       seatLabel: '+ Per seat',
-      seatPrice: 'R150/mo',
+      seatPrice: 'R250/mo',
     },
     annual: {
       name: 'Team License',
@@ -48,12 +48,12 @@ const TIER_DETAILS: Record<PricingTier, Record<BillingPeriod, TierDetail>> = {
       priceLabel: 'Annual license (2 months free)',
       price: 'R18,500/yr',
       seatLabel: '+ Per seat',
-      seatPrice: 'R1,500/yr',
+      seatPrice: 'R2,500/yr',
     },
   },
 };
 
-export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, onClose, tier, billingPeriod = 'monthly' }) => {
+export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, onClose, tier, billingPeriod = 'annual' }) => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
