@@ -128,14 +128,14 @@ Indie filmmakers · Production companies · Studios · Producers · Line produce
 ## 8. Pricing
 
 ### Model
-Two tiers, priced in ZAR. Uploading and editing scripts is always free — you only pay when you run a breakdown. Individuals pay per breakdown; teams license the whole crew for the year.
+Two tiers, priced in ZAR. Uploading and editing scripts is always free — you only pay when you run a breakdown. Individuals pay per breakdown; teams license the whole crew on a cadence that fits (monthly, 3-month, 6-month, or annual), with more seats bundled in on longer terms.
 
 ### Tiers
 
 | Tier | Price | Billing | Best for |
 |------|-------|---------|----------|
 | **Pay-Per-Breakdown** | **R2,250** / breakdown | Pay as you go | Freelancers, individual writers, small producers |
-| **Team License** ⭐ | **R1,850** / month + **R250** per seat / mo, or **R18,500** / year + **R2,500** per seat / yr (2 months free) | Monthly or annual | Production companies, ADs, producers, department heads |
+| **Team License** ⭐ | **R1,850** / month (extra seats R250/mo each) · **R5,500** / 3 months (1 seat included) · **R9,500** / 6 months (2 seats included) · **R18,500** / year (3 seats included) — extra seats always R250/mo equivalent, whichever cadence you're on | Monthly, 3-month, 6-month, or annual | Production companies, ADs, producers, department heads |
 
 ### What Every Breakdown Includes
 - Full breakdown extraction (cast, props, wardrobe, vehicles, makeup & hair, SFX, sound, atmosphere)
@@ -145,7 +145,7 @@ Two tiers, priced in ZAR. Uploading and editing scripts is always free — you o
 - All production reports & exports
 
 ### Team License Adds
-- Invite crew members (R250/mo or R2,500/yr per seat, paid by the account owner)
+- Invite crew members (extra seats are a flat R250/month equivalent on every cadence — 3-month R750 flat, 6-month R1,500 flat, annual R3,000 flat — paid by the account owner)
 - Department workspaces
 - Cross-department threads
 - Department item tracking & notes

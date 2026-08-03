@@ -209,8 +209,8 @@ export const Pricing: React.FC = () => {
                       <p className="text-lg font-bold text-slate-50 mb-4">
                         {CADENCE_HEADLINES[billingPeriod]}
                       </p>
-                      <div className="overflow-hidden rounded-lg border border-slate-700">
-                        <table className="w-full text-left text-[13px] font-mono">
+                      <div className="overflow-x-auto rounded-lg border border-slate-700">
+                        <table className="w-full min-w-[420px] text-left text-[13px] font-mono">
                           <thead>
                             <tr className="bg-slate-900 text-slate-500 uppercase tracking-wider text-[10px]">
                               <th className="px-3 py-2 font-bold">Cadence</th>
@@ -227,7 +227,16 @@ export const Pricing: React.FC = () => {
                                 <tr
                                   key={cadence}
                                   onClick={() => setBillingPeriod(cadence)}
-                                  className={`cursor-pointer border-t border-slate-700 transition-colors ${
+                                  tabIndex={0}
+                                  role="button"
+                                  aria-pressed={isActive}
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                      e.preventDefault();
+                                      setBillingPeriod(cadence);
+                                    }
+                                  }}
+                                  className={`cursor-pointer border-t border-slate-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-500 focus-visible:outline-offset-[-2px] ${
                                     isActive ? 'bg-amber-500/10' : 'hover:bg-slate-700/40'
                                   }`}
                                 >
@@ -360,7 +369,7 @@ export const Pricing: React.FC = () => {
         isOpen={selectedTier !== null}
         onClose={() => setSelectedTier(null)}
         tier={selectedTier ?? 'tier_1'}
-        billingPeriod={billingPeriod}
+        billingPeriod={selectedTier === 'tier_2' ? billingPeriod : 'monthly'}
       />
     </section>
   );
