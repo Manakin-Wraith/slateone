@@ -91,22 +91,26 @@ function generateTrackingId(): string {
   return `sl_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 }
 
-// ── Pricing tiers (2026-07) ──────────────────────────────────────────────
+// ── Pricing tiers (2026-08) ──────────────────────────────────────────────
 // tier_1 = Pay-Per-Breakdown (R2,250 per breakdown)
-// tier_2 = Team License (R1,850/mo + R250/seat/mo, or R18,500/yr +
-//          R2,500/seat/yr billed annually — 2 months free vs. monthly)
+// tier_2 = Team License, 4 cadences, each bundling included seats:
+//   monthly  R1,850  / 0 included seats / extra seat R250/mo
+//   3month   R5,500  / 1 included seat  / extra seat R750 flat
+//   6month   R9,500  / 2 included seats / extra seat R1,500 flat
+//   annual   R18,500 / 3 included seats / extra seat R3,000 flat
+// Extra seats never discount — always the R250/seat/month equivalent.
 // The landing page captures the email as a lead, then redirects to the app
 // signup page. The app backend maps the `plan` query param to the full
 // signup_plan id (tier_1_pay_per_breakdown / tier_2_team), and the
-// `billing_period` param (monthly/annual) selects the rate.
+// `billing_period` param (monthly/3month/6month/annual) selects the rate.
 export type PricingTier = 'tier_1' | 'tier_2';
-export type BillingPeriod = 'monthly' | 'annual';
+export type BillingPeriod = 'monthly' | '3month' | '6month' | 'annual';
 
 // Headline ZAR amount stored on the lead for analytics (not a charge here).
-// tier_1 has no billing period; tier_2 varies by monthly vs. annual billing.
+// tier_1 has no billing period; tier_2 varies by cadence.
 const TIER_PRICE: Record<PricingTier, Partial<Record<BillingPeriod, number>>> = {
   tier_1: { monthly: 2250 },
-  tier_2: { monthly: 1850, annual: 18500 },
+  tier_2: { monthly: 1850, '3month': 5500, '6month': 9500, annual: 18500 },
 };
 
 // Where the CTA sends the user to complete signup on the product app.
