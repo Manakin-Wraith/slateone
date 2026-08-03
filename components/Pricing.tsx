@@ -13,9 +13,27 @@ interface TeamsBand {
 interface BillingVariant {
   price: string;
   priceUnit: string;
-  priceNote: string;
+  includedSeats: number;
+  seatPrice: string;
+  seatPriceUnit: string;
   savingsBadge?: string;
 }
+
+const CADENCES: BillingPeriod[] = ['monthly', '3month', '6month', 'annual'];
+
+const CADENCE_LABELS: Record<BillingPeriod, string> = {
+  monthly: 'Monthly',
+  '3month': '3-Month',
+  '6month': '6-Month',
+  annual: 'Annual',
+};
+
+const CADENCE_HEADLINES: Record<BillingPeriod, string> = {
+  monthly: 'R1,850/month — extra seats R250/mo each',
+  '3month': 'R5,500 for 3 months — you + 1 teammate included',
+  '6month': 'R9,500 for 6 months — your 3-person crew included',
+  annual: 'R18,500/year — your whole 4-person team included',
+};
 
 interface TierConfig {
   id: PricingTier;
@@ -59,18 +77,37 @@ const TIERS: TierConfig[] = [
     name: 'Team License',
     price: 'R1,850',
     priceUnit: '/ month',
-    priceNote: '+ R250 per seat / mo',
     billing: {
       monthly: {
         price: 'R1,850',
         priceUnit: '/ month',
-        priceNote: '+ R250 per seat / mo',
+        includedSeats: 0,
+        seatPrice: 'R250',
+        seatPriceUnit: '/ mo',
+      },
+      '3month': {
+        price: 'R5,500',
+        priceUnit: '/ 3 months',
+        includedSeats: 1,
+        seatPrice: 'R750',
+        seatPriceUnit: 'flat',
+        savingsBadge: 'Seat included',
+      },
+      '6month': {
+        price: 'R9,500',
+        priceUnit: '/ 6 months',
+        includedSeats: 2,
+        seatPrice: 'R1,500',
+        seatPriceUnit: 'flat',
+        savingsBadge: '~14% savings',
       },
       annual: {
         price: 'R18,500',
         priceUnit: '/ year',
-        priceNote: '+ R2,500 per seat / yr',
-        savingsBadge: '2 months free',
+        includedSeats: 3,
+        seatPrice: 'R3,000',
+        seatPriceUnit: 'flat',
+        savingsBadge: '~17% savings',
       },
     },
     tagline: 'Unlimited breakdowns for your whole crew.',
@@ -115,8 +152,8 @@ export const Pricing: React.FC = () => {
             </h2>
             <p className="text-lg text-slate-400 leading-relaxed mb-6">
               Pay per breakdown when you need it, or license your whole
-              team for the year. Uploading and editing scripts is always
-              free &mdash; you only pay when you run a breakdown.
+              team on a term that fits. Uploading and editing scripts is
+              always free &mdash; you only pay when you run a breakdown.
             </p>
             <p className="text-sm text-slate-500 font-mono">
               Prices in ZAR. No lock-in.
@@ -133,13 +170,8 @@ export const Pricing: React.FC = () => {
             Work solo. Or bring the whole crew.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto items-stretch">
+          <div className="grid md:grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-6 max-w-6xl mx-auto items-stretch">
             {TIERS.map((tier) => {
-              const variant = tier.billing?.[billingPeriod];
-              const displayPrice = variant?.price ?? tier.price;
-              const displayUnit = variant?.priceUnit ?? tier.priceUnit;
-              const displayNote = variant?.priceNote ?? tier.priceNote;
-
               return (
               <div
                 key={tier.id}
@@ -168,62 +200,69 @@ export const Pricing: React.FC = () => {
                       {tier.badge}
                     </span>
 
-                    {tier.billing && (
-                      <div className="inline-flex items-center bg-slate-900 border border-slate-700 rounded-full p-0.5 text-[11px] font-mono">
-                        <button
-                          type="button"
-                          onClick={() => setBillingPeriod('monthly')}
-                          className={`px-3 py-1 rounded-full transition-colors ${
-                            billingPeriod === 'monthly'
-                              ? 'bg-amber-500 text-slate-900 font-bold'
-                              : 'text-slate-400 hover:text-slate-200'
-                          }`}
-                        >
-                          Monthly
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setBillingPeriod('annual')}
-                          className={`px-3 py-1 rounded-full transition-colors ${
-                            billingPeriod === 'annual'
-                              ? 'bg-amber-500 text-slate-900 font-bold'
-                              : 'text-slate-400 hover:text-slate-200'
-                          }`}
-                        >
-                          Annual
-                        </button>
-                      </div>
-                    )}
                   </div>
 
                   <h3 className="text-xl font-bold text-slate-50 mb-4">{tier.name}</h3>
 
-                  {tier.billing?.annual?.savingsBadge && billingPeriod === 'annual' && (
-                    <span className="inline-block text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-amber-500 bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded mb-3">
-                      {tier.billing.annual.savingsBadge}
-                    </span>
-                  )}
-
-                  {displayNote ? (
-                    <div className="space-y-2 mb-1">
-                      <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500">License</span>
-                        <span className="flex items-baseline gap-1">
-                          <span className="text-3xl font-bold text-slate-50">{displayPrice}</span>
-                          <span className="text-sm text-slate-500 font-mono">{displayUnit}</span>
-                        </span>
+                  {tier.billing ? (
+                    <div className="mb-1">
+                      <p className="text-lg font-bold text-slate-50 mb-4">
+                        {CADENCE_HEADLINES[billingPeriod]}
+                      </p>
+                      <div className="overflow-hidden rounded-lg border border-slate-700">
+                        <table className="w-full text-left text-[13px] font-mono">
+                          <thead>
+                            <tr className="bg-slate-900 text-slate-500 uppercase tracking-wider text-[10px]">
+                              <th className="px-3 py-2 font-bold">Cadence</th>
+                              <th className="px-3 py-2 font-bold">Price</th>
+                              <th className="px-3 py-2 font-bold">Included</th>
+                              <th className="px-3 py-2 font-bold">Extra seat</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {CADENCES.map((cadence) => {
+                              const variant = tier.billing![cadence];
+                              const isActive = billingPeriod === cadence;
+                              return (
+                                <tr
+                                  key={cadence}
+                                  onClick={() => setBillingPeriod(cadence)}
+                                  className={`cursor-pointer border-t border-slate-700 transition-colors ${
+                                    isActive ? 'bg-amber-500/10' : 'hover:bg-slate-700/40'
+                                  }`}
+                                >
+                                  <td className={`px-3 py-2.5 font-bold ${isActive ? 'text-amber-500' : 'text-slate-300'}`}>
+                                    {CADENCE_LABELS[cadence]}
+                                  </td>
+                                  <td className="px-3 py-2.5 text-slate-50">{variant.price}</td>
+                                  <td className="px-3 py-2.5 text-slate-400">
+                                    {variant.includedSeats > 0
+                                      ? `${variant.includedSeats} seat${variant.includedSeats > 1 ? 's' : ''}`
+                                      : '—'}
+                                    {variant.savingsBadge && (
+                                      <span className="ml-2 inline-block text-[9px] font-bold uppercase tracking-wide text-amber-500 bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded align-middle">
+                                        {variant.savingsBadge}
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="px-3 py-2.5 text-slate-400">
+                                    {variant.seatPrice} {variant.seatPriceUnit}
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
                       </div>
-                      <div className="flex items-baseline justify-between gap-2 pt-2 border-t border-dashed border-slate-700">
-                        <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500">+ Seats</span>
-                        <span className="flex items-baseline gap-1">
-                          <span className="text-xl font-bold text-amber-500">{displayNote.replace('+ ', '')}</span>
-                        </span>
-                      </div>
+                      <p className="text-[12px] text-slate-500 mt-3">
+                        Need more? Extra seats are a flat R250/month, no matter which
+                        plan — simple math, no surprises.
+                      </p>
                     </div>
                   ) : (
                     <div className="flex items-baseline gap-1 mb-1">
-                      <span className="text-5xl font-bold text-slate-50">{displayPrice}</span>
-                      <span className="text-base text-slate-500 font-mono">{displayUnit}</span>
+                      <span className="text-5xl font-bold text-slate-50">{tier.price}</span>
+                      <span className="text-base text-slate-500 font-mono">{tier.priceUnit}</span>
                     </div>
                   )}
                   <p className="text-slate-400 text-sm mt-3">{tier.tagline}</p>
