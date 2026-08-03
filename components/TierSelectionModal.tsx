@@ -14,24 +14,24 @@ interface TierDetail {
   tagline: string;
   priceLabel: string;
   price: string;
+  includedSeats?: number;
   seatLabel?: string;
   seatPrice?: string;
 }
 
+const SOLO_DETAIL: TierDetail = {
+  name: 'Pay-Per-Breakdown',
+  tagline: 'Unlimited uploads · Pay only when you run a breakdown',
+  priceLabel: 'Per breakdown',
+  price: 'R2,250',
+};
+
 const TIER_DETAILS: Record<PricingTier, Record<BillingPeriod, TierDetail>> = {
   tier_1: {
-    monthly: {
-      name: 'Pay-Per-Breakdown',
-      tagline: 'Unlimited uploads · Pay only when you run a breakdown',
-      priceLabel: 'Per breakdown',
-      price: 'R2,250',
-    },
-    annual: {
-      name: 'Pay-Per-Breakdown',
-      tagline: 'Unlimited uploads · Pay only when you run a breakdown',
-      priceLabel: 'Per breakdown',
-      price: 'R2,250',
-    },
+    monthly: SOLO_DETAIL,
+    '3month': SOLO_DETAIL,
+    '6month': SOLO_DETAIL,
+    annual: SOLO_DETAIL,
   },
   tier_2: {
     monthly: {
@@ -39,16 +39,36 @@ const TIER_DETAILS: Record<PricingTier, Record<BillingPeriod, TierDetail>> = {
       tagline: 'Unlimited breakdowns · Full team collaboration',
       priceLabel: 'Monthly license',
       price: 'R1,850/mo',
-      seatLabel: '+ Per seat',
+      includedSeats: 0,
+      seatLabel: '+ Extra seat',
       seatPrice: 'R250/mo',
+    },
+    '3month': {
+      name: 'Team License',
+      tagline: 'Unlimited breakdowns · Full team collaboration',
+      priceLabel: '3-month license',
+      price: 'R5,500 / 3mo',
+      includedSeats: 1,
+      seatLabel: '+ Extra seat',
+      seatPrice: 'R750 flat',
+    },
+    '6month': {
+      name: 'Team License',
+      tagline: 'Unlimited breakdowns · Full team collaboration',
+      priceLabel: '6-month license',
+      price: 'R9,500 / 6mo',
+      includedSeats: 2,
+      seatLabel: '+ Extra seat',
+      seatPrice: 'R1,500 flat',
     },
     annual: {
       name: 'Team License',
       tagline: 'Unlimited breakdowns · Full team collaboration',
       priceLabel: 'Annual license (2 months free)',
       price: 'R18,500/yr',
-      seatLabel: '+ Per seat',
-      seatPrice: 'R2,500/yr',
+      includedSeats: 3,
+      seatLabel: '+ Extra seat',
+      seatPrice: 'R3,000 flat',
     },
   },
 };
@@ -123,6 +143,16 @@ export const TierSelectionModal: React.FC<TierSelectionModalProps> = ({ isOpen, 
             <span className="text-sm text-slate-300">{details.priceLabel}</span>
             <span className="text-lg font-bold text-slate-50">{details.price}</span>
           </div>
+          {typeof details.includedSeats === 'number' && (
+            <div className="flex items-center justify-between py-3">
+              <span className="text-sm text-slate-300">Includes</span>
+              <span className="text-sm font-bold text-slate-200">
+                {details.includedSeats > 0
+                  ? `${details.includedSeats} seat${details.includedSeats > 1 ? 's' : ''}`
+                  : 'No seats'}
+              </span>
+            </div>
+          )}
           {details.seatLabel && details.seatPrice && (
             <div className="flex items-center justify-between pt-3">
               <span className="text-sm text-slate-300">{details.seatLabel}</span>
