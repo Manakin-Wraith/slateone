@@ -7,6 +7,7 @@ import { Pricing } from './components/Pricing';
 import { Footer } from './components/Footer';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfService } from './components/TermsOfService';
+import { FAQ } from './components/FAQ';
 import { AppState } from './types';
 import { Film } from 'lucide-react';
 
@@ -30,6 +31,11 @@ const App: React.FC = () => {
 
   const handleBackToHome = () => {
     setAppState(AppState.LANDING);
+    window.scrollTo(0, 0);
+  };
+
+  const handleFAQClick = () => {
+    setAppState(AppState.FAQ);
     window.scrollTo(0, 0);
   };
 
@@ -57,6 +63,13 @@ const App: React.FC = () => {
                 Pricing
               </a>
               <a
+                href="#faq"
+                onClick={(e) => { e.preventDefault(); handleFAQClick(); }}
+                className="hidden sm:inline-block text-sm text-slate-400 hover:text-amber-500 transition-colors cursor-pointer"
+              >
+                FAQ
+              </a>
+              <a
                 href="https://app.slateone.studio/login?mode=login"
                 className="text-sm font-medium bg-slate-800 border border-slate-700 px-4 py-2 rounded-lg text-slate-300 hover:text-amber-500 hover:border-amber-500/50 transition-all"
               >
@@ -82,6 +95,8 @@ const App: React.FC = () => {
           <PrivacyPolicy onBack={handleBackToHome} />
         ) : appState === AppState.TERMS_OF_SERVICE ? (
           <TermsOfService onBack={handleBackToHome} />
+        ) : appState === AppState.FAQ ? (
+          <FAQ onBack={handleBackToHome} />
         ) : null}
       </main>
 

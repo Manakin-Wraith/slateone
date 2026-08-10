@@ -12,7 +12,8 @@ export enum AppState {
   LANDING = 'LANDING',
   THANK_YOU = 'THANK_YOU',
   PRIVACY_POLICY = 'PRIVACY_POLICY',
-  TERMS_OF_SERVICE = 'TERMS_OF_SERVICE'
+  TERMS_OF_SERVICE = 'TERMS_OF_SERVICE',
+  FAQ = 'FAQ'
 }
 
 export interface FeatureProps {
