@@ -73,6 +73,11 @@ real page. Needs a product-owner pass on:
   likely still show the old annual-only number.
 - [ ] Sweep `docs/marketing-reference.md` for any remaining "Annual Team License" /
   annual-only pricing language now that monthly is the default framing.
+- [ ] **Install the Meta Pixel on slateone.studio.** Blocked on the Pixel ID from
+  Events Manager (Business Manager → Events Manager → Data Sources) — the Ad
+  Account ID (`206300442416906`) is a different object and won't work. User is
+  currently sorting out the Meta ad accounts; once the Pixel ID is in hand, drop
+  the base pixel snippet into `index.html` (no other integration work needed).
 
 ## Engineering / infra
 
