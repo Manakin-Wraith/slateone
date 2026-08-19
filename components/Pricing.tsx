@@ -25,6 +25,11 @@ interface CollaborationBand {
   features: string[];
 }
 
+interface UpgradeCallout {
+  headline: string;
+  sub: string;
+}
+
 interface LadderCard {
   key: string;
   tier: PricingTier;
@@ -35,13 +40,15 @@ interface LadderCard {
   priceZAR: number;
   priceUnit: string;
   effectiveMonthly?: string;
-  upgradeNote?: string;
+  upgradeNote?: UpgradeCallout;
   includedSeats?: number;
   peopleLabel?: string;
   seatPriceLabel?: string;
   commitmentLabel?: string;
   tagline: string;
   features: string[];
+  includesNote?: string;
+  bestForNote?: string;
   footnote?: string;
   cta: string;
   accent: 'neutral' | 'cyan' | 'amber';
@@ -88,10 +95,11 @@ const CARDS: LadderCard[] = [
     tagline: 'Unlimited screenplay breakdowns while you develop your slate.',
     features: [
       'Unlimited screenplay breakdowns',
-      'Everything in Project',
       'Team collaboration',
       'Production reports & exports',
     ],
+    includesNote: 'Includes everything in Project.',
+    bestForNote: 'Best for: filmmakers developing a slate of projects.',
     cta: 'Start Studio',
     accent: 'neutral',
   },
@@ -111,9 +119,11 @@ const CARDS: LadderCard[] = [
     tagline: 'Bring your production team into the workflow.',
     features: [
       'Unlimited screenplay breakdowns',
-      'Everything in Studio 3',
       'Collaborative production workflow',
+      'Production reports & exports',
     ],
+    includesNote: 'Includes everything in Studio 3.',
+    bestForNote: 'Best for: production teams running multiple projects.',
     cta: 'Start Studio',
     accent: 'cyan',
   },
@@ -130,14 +140,17 @@ const CARDS: LadderCard[] = [
     peopleLabel: 'You + 3 people included',
     seatPriceLabel: 'R250 / mo',
     commitmentLabel: '12-month commitment.',
-    upgradeNote: 'R41/mo more than Studio 6 — for double the term and one more person',
+    upgradeNote: {
+      headline: 'Only R41/mo more than Studio 6',
+      sub: 'Get 12 months + 3 people included.',
+    },
     tagline: 'Make SlateOne part of your production workflow, year-round.',
     features: [
       'Unlimited screenplay breakdowns',
-      'Everything in Studio 6',
       'Full-year production workflow',
       'Lowest effective monthly price',
     ],
+    includesNote: 'Includes everything in Studio 6.',
     cta: 'Choose Studio 12',
     accent: 'amber',
     badgeRibbon: 'Best Value',
@@ -164,9 +177,9 @@ const COLLABORATION_BAND: CollaborationBand = {
 };
 
 const ACCENT_CARD_CLASSES: Record<LadderCard['accent'], string> = {
-  neutral: 'border-slate-700 bg-slate-800',
-  cyan: 'border-slate-600 bg-slate-800',
-  amber: 'border-amber-500/40 bg-amber-500/[0.04] shadow-lg shadow-amber-500/10 scale-[1.02]',
+  neutral: 'border-slate-700 bg-slate-800 hover:bg-slate-800/70 hover:border-slate-600',
+  cyan: 'border-slate-600 bg-slate-800 hover:bg-slate-800/70 hover:border-slate-500',
+  amber: 'border-amber-500/40 bg-amber-500/[0.04] shadow-lg shadow-amber-500/10 lg:scale-[1.03] hover:border-amber-400/60 hover:shadow-amber-500/20',
 };
 
 const ACCENT_BADGE_CLASSES: Record<LadderCard['accent'], string> = {
@@ -178,7 +191,13 @@ const ACCENT_BADGE_CLASSES: Record<LadderCard['accent'], string> = {
 const ACCENT_CTA_CLASSES: Record<LadderCard['accent'], string> = {
   neutral: 'bg-slate-700 text-slate-50 border border-slate-600 hover:bg-slate-600',
   cyan: 'bg-slate-700 text-slate-50 border border-slate-600 hover:bg-slate-600',
-  amber: 'bg-amber-500 text-slate-900 hover:bg-amber-400',
+  amber: 'bg-amber-600 text-slate-950 hover:bg-amber-500',
+};
+
+const ACCENT_CHECK_CLASSES: Record<LadderCard['accent'], string> = {
+  neutral: 'text-amber-500/40',
+  cyan: 'text-amber-500/40',
+  amber: 'text-amber-500/70',
 };
 
 export const Pricing: React.FC = () => {
@@ -225,40 +244,50 @@ export const Pricing: React.FC = () => {
             Work solo. Or bring the whole crew.
           </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto items-stretch">
+          <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.05fr] gap-6 max-w-7xl mx-auto items-stretch">
             {CARDS.map((card) => (
               <div
                 key={card.key}
-                className={`relative border rounded-2xl overflow-hidden flex flex-col ${ACCENT_CARD_CLASSES[card.accent]}`}
+                onClick={() => setSelectedCardKey(card.key)}
+                className={`relative border rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-300 ${ACCENT_CARD_CLASSES[card.accent]}`}
               >
                 {card.badgeRibbon && (
-                  <div className="absolute top-0 right-0 text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-slate-900 bg-amber-500 px-3 py-1 rounded-bl-lg">
+                  <div className="absolute top-4 right-4 text-[9px] font-mono font-bold uppercase tracking-[0.15em] text-amber-500 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-full">
                     {card.badgeRibbon}
                   </div>
                 )}
 
                 {/* Card Header */}
-                <div className="p-8 border-b border-slate-700">
+                <div className="p-8 border-b border-slate-800/70">
                   <span
                     className={`text-[10px] font-mono font-bold uppercase tracking-[0.2em] px-3 py-1 rounded inline-block mb-6 ${ACCENT_BADGE_CLASSES[card.accent]}`}
                   >
                     {card.badge}
                   </span>
 
-                  <h3 className="text-xl font-bold text-slate-50 mb-1">{card.name}</h3>
-                  <p className="text-[13px] text-slate-500 font-mono uppercase tracking-wide mb-4">{card.subhead}</p>
+                  <h3 className="text-[17px] font-bold text-slate-50 mb-1">{card.name}</h3>
+                  <p className="text-[11px] text-slate-500 font-mono uppercase tracking-[0.1em] mb-4">{card.subhead}</p>
 
                   <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-4xl font-bold text-slate-50">{formatZAR(card.priceZAR)}</span>
-                    <span className="text-base text-slate-500 font-mono">{card.priceUnit}</span>
+                    <span
+                      className={`font-extrabold text-slate-50 tracking-tight ${card.accent === 'amber' ? 'text-[36px]' : 'text-[30px]'}`}
+                    >
+                      {formatZAR(card.priceZAR)}
+                    </span>
+                    <span className="text-sm text-slate-500 font-mono">{card.priceUnit}</span>
                   </div>
 
                   {card.effectiveMonthly && (
-                    <p className="text-[13px] text-slate-500 font-mono mt-1">{card.effectiveMonthly}</p>
+                    <p className="text-[12px] text-slate-400 font-mono mt-1">{card.effectiveMonthly}</p>
                   )}
 
                   {card.upgradeNote && (
-                    <p className="text-[12px] text-amber-500 font-mono mt-1">{card.upgradeNote}</p>
+                    <div className="mt-3 rounded-lg border border-amber-500/25 bg-amber-500/[0.08] px-3 py-2">
+                      <p className="text-[10px] font-mono font-bold uppercase tracking-wide text-amber-500 mb-0.5">
+                        {card.upgradeNote.headline}
+                      </p>
+                      <p className="text-[11px] text-slate-400">{card.upgradeNote.sub}</p>
+                    </div>
                   )}
 
                   {card.peopleLabel && (
@@ -270,30 +299,45 @@ export const Pricing: React.FC = () => {
                     </p>
                   )}
 
-                  <p className="text-slate-400 text-sm mt-4">{card.tagline}</p>
+                  <p className="text-slate-300 text-[13px] leading-relaxed mt-4">{card.tagline}</p>
                   {card.commitmentLabel && (
-                    <p className="text-[12px] text-slate-500 mt-2">{card.commitmentLabel}</p>
+                    <p className="text-[11px] text-slate-500 mt-2">{card.commitmentLabel}</p>
                   )}
                 </div>
 
                 {/* Features */}
-                <div className="p-8 space-y-3 flex-1">
-                  {card.features.map((item, i) => (
-                    <div key={i} className="flex items-start gap-3 text-[14px] text-slate-400">
-                      <Check className="w-4 h-4 text-amber-500/50 flex-shrink-0 mt-1" />
-                      {item}
-                    </div>
-                  ))}
+                <div className="p-8 flex-1 flex flex-col">
+                  <div className="space-y-3">
+                    {card.features.map((item, i) => (
+                      <div key={i} className="flex items-start gap-2.5 text-[13px]">
+                        <Check className={`w-3.5 h-3.5 flex-shrink-0 mt-[3px] ${ACCENT_CHECK_CLASSES[card.accent]}`} />
+                        <span className={i === 0 ? 'text-slate-200 font-medium' : 'text-slate-400'}>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {card.includesNote && (
+                    <p className="text-[11px] text-slate-500 italic mt-4">{card.includesNote}</p>
+                  )}
+
+                  {card.bestForNote && (
+                    <p className="text-[12px] text-slate-400 mt-4 pt-4 border-t border-slate-800/70">
+                      {card.bestForNote}
+                    </p>
+                  )}
 
                   {card.footnote && (
-                    <p className="text-[13px] text-slate-500 italic pt-2">{card.footnote}</p>
+                    <p className="text-[11px] text-slate-500 italic mt-auto pt-4">{card.footnote}</p>
                   )}
                 </div>
 
                 {/* CTA */}
                 <div className="px-8 pb-8">
                   <button
-                    onClick={() => setSelectedCardKey(card.key)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedCardKey(card.key);
+                    }}
                     className={`w-full font-bold py-4 px-6 rounded-lg transition-all duration-300 text-sm cursor-pointer ${ACCENT_CTA_CLASSES[card.accent]}`}
                   >
                     {card.cta}
