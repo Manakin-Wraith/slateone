@@ -31,11 +31,15 @@ interface LadderCard {
   billingPeriod: BillingPeriod;
   badge: string;
   name: string;
+  subhead: string;
   priceZAR: number;
   priceUnit: string;
   effectiveMonthly?: string;
+  upgradeNote?: string;
   includedSeats?: number;
+  peopleLabel?: string;
   seatPriceLabel?: string;
+  commitmentLabel?: string;
   tagline: string;
   features: string[];
   footnote?: string;
@@ -51,11 +55,12 @@ const CARDS: LadderCard[] = [
     billingPeriod: 'annual',
     badge: 'Project',
     name: 'Project',
+    subhead: 'Pay as you go',
     priceZAR: 2250,
-    priceUnit: '/ breakdown',
-    tagline: 'For individual filmmakers. Pay only when you run a breakdown.',
+    priceUnit: '/ screenplay',
+    tagline: 'For one-off projects. No subscription.',
     features: [
-      'Unlimited script uploads',
+      '1 screenplay breakdown',
       'Scene detection & parsing — free',
       'Full breakdown extraction (cast, props, wardrobe, vehicles, SFX & more)',
       'Scene & story-day management',
@@ -63,8 +68,8 @@ const CARDS: LadderCard[] = [
       'Zoomable stripboard scheduling',
       'All production reports & exports',
     ],
-    footnote: 'Just you — no crew collaboration.',
-    cta: 'Get Started',
+    footnote: 'Just you — no team collaboration.',
+    cta: 'Break Down a Script',
     accent: 'neutral',
   },
   {
@@ -73,13 +78,21 @@ const CARDS: LadderCard[] = [
     billingPeriod: '3month',
     badge: 'Studio 3',
     name: 'Studio 3',
+    subhead: 'For active development',
     priceZAR: 5500,
     priceUnit: '/ 3 months',
     includedSeats: 1,
+    peopleLabel: 'You + 1 person included',
     seatPriceLabel: 'R250 / mo',
-    tagline: '3-month commitment. You + 1 teammate included.',
-    features: ['Everything in Project, plus unlimited breakdowns included'],
-    cta: 'Get Started',
+    commitmentLabel: '3-month commitment.',
+    tagline: 'Unlimited screenplay breakdowns while you develop your slate.',
+    features: [
+      'Unlimited screenplay breakdowns',
+      'Everything in Project',
+      'Team collaboration',
+      'Production reports & exports',
+    ],
+    cta: 'Start Studio',
     accent: 'neutral',
   },
   {
@@ -88,13 +101,20 @@ const CARDS: LadderCard[] = [
     billingPeriod: '6month',
     badge: 'Studio 6',
     name: 'Studio 6',
+    subhead: 'For production teams',
     priceZAR: 9500,
     priceUnit: '/ 6 months',
     includedSeats: 2,
+    peopleLabel: 'You + 2 people included',
     seatPriceLabel: 'R250 / mo',
-    tagline: '6-month commitment. Your 3-person crew included.',
-    features: ['Everything in Project, plus unlimited breakdowns included'],
-    cta: 'Get Started',
+    commitmentLabel: '6-month commitment.',
+    tagline: 'Bring your production team into the workflow.',
+    features: [
+      'Unlimited screenplay breakdowns',
+      'Everything in Studio 3',
+      'Collaborative production workflow',
+    ],
+    cta: 'Start Studio',
     accent: 'cyan',
   },
   {
@@ -103,13 +123,22 @@ const CARDS: LadderCard[] = [
     billingPeriod: 'annual',
     badge: 'Studio 12',
     name: 'Studio 12',
+    subhead: 'For production companies',
     priceZAR: 18500,
     priceUnit: '/ year',
     includedSeats: 3,
+    peopleLabel: 'You + 3 people included',
     seatPriceLabel: 'R250 / mo',
-    tagline: '12-month commitment. Your whole 4-person team included.',
-    features: ['Everything in Project, plus unlimited breakdowns included'],
-    cta: 'Get Started',
+    commitmentLabel: '12-month commitment.',
+    upgradeNote: 'R41/mo more than Studio 6 — for double the term and one more person',
+    tagline: 'Make SlateOne part of your production workflow, year-round.',
+    features: [
+      'Unlimited screenplay breakdowns',
+      'Everything in Studio 6',
+      'Full-year production workflow',
+      'Lowest effective monthly price',
+    ],
+    cta: 'Choose Studio 12',
     accent: 'amber',
     badgeRibbon: 'Best Value',
   },
@@ -136,19 +165,19 @@ const COLLABORATION_BAND: CollaborationBand = {
 
 const ACCENT_CARD_CLASSES: Record<LadderCard['accent'], string> = {
   neutral: 'border-slate-700 bg-slate-800',
-  cyan: 'border-cyan-500/30 bg-cyan-500/[0.03]',
-  amber: 'border-amber-500/30 bg-amber-500/[0.03] shadow-lg',
+  cyan: 'border-slate-600 bg-slate-800',
+  amber: 'border-amber-500/40 bg-amber-500/[0.04] shadow-lg shadow-amber-500/10 scale-[1.02]',
 };
 
 const ACCENT_BADGE_CLASSES: Record<LadderCard['accent'], string> = {
   neutral: 'text-slate-400 bg-slate-700 border border-slate-600',
-  cyan: 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/20',
+  cyan: 'text-slate-300 bg-slate-700 border border-slate-600',
   amber: 'text-amber-500 bg-amber-500/10 border border-amber-500/20',
 };
 
 const ACCENT_CTA_CLASSES: Record<LadderCard['accent'], string> = {
   neutral: 'bg-slate-700 text-slate-50 border border-slate-600 hover:bg-slate-600',
-  cyan: 'bg-slate-700 text-slate-50 border border-cyan-500/30 hover:bg-slate-600',
+  cyan: 'bg-slate-700 text-slate-50 border border-slate-600 hover:bg-slate-600',
   amber: 'bg-amber-500 text-slate-900 hover:bg-amber-400',
 };
 
@@ -175,6 +204,11 @@ export const Pricing: React.FC = () => {
               Pay per project when you need it, or lock in a term and bring
               your crew along. Uploading and editing scripts is always free
               &mdash; you only pay when you run a breakdown.
+            </p>
+            <p className="text-sm text-slate-500 leading-relaxed mb-6">
+              A manual breakdown typically takes 2&ndash;5 days of line-by-line
+              highlighting and data entry. SlateOne turns that into a
+              structured digital workflow &mdash; in minutes.
             </p>
             <p className="text-sm text-slate-500 font-mono">
               Prices in ZAR.
@@ -211,7 +245,8 @@ export const Pricing: React.FC = () => {
                     {card.badge}
                   </span>
 
-                  <h3 className="text-xl font-bold text-slate-50 mb-4">{card.name}</h3>
+                  <h3 className="text-xl font-bold text-slate-50 mb-1">{card.name}</h3>
+                  <p className="text-[13px] text-slate-500 font-mono uppercase tracking-wide mb-4">{card.subhead}</p>
 
                   <div className="flex items-baseline gap-1 mb-1">
                     <span className="text-4xl font-bold text-slate-50">{formatZAR(card.priceZAR)}</span>
@@ -222,16 +257,23 @@ export const Pricing: React.FC = () => {
                     <p className="text-[13px] text-slate-500 font-mono mt-1">{card.effectiveMonthly}</p>
                   )}
 
-                  {typeof card.includedSeats === 'number' && (
+                  {card.upgradeNote && (
+                    <p className="text-[12px] text-amber-500 font-mono mt-1">{card.upgradeNote}</p>
+                  )}
+
+                  {card.peopleLabel && (
                     <p className="text-[13px] text-slate-400 mt-3">
-                      {card.includedSeats} seat{card.includedSeats > 1 ? 's' : ''} included
+                      {card.peopleLabel}
                       {card.seatPriceLabel && (
-                        <span className="text-slate-500"> · extra seat {card.seatPriceLabel}</span>
+                        <span className="text-slate-500"> · add people for {card.seatPriceLabel}</span>
                       )}
                     </p>
                   )}
 
                   <p className="text-slate-400 text-sm mt-4">{card.tagline}</p>
+                  {card.commitmentLabel && (
+                    <p className="text-[12px] text-slate-500 mt-2">{card.commitmentLabel}</p>
+                  )}
                 </div>
 
                 {/* Features */}
