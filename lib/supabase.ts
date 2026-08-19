@@ -92,9 +92,9 @@ function generateTrackingId(): string {
 }
 
 // ── Pricing tiers (2026-08) ──────────────────────────────────────────────
-// tier_1 = Pay-Per-Breakdown (R2,250 per breakdown)
-// tier_2 = Team License, 4 cadences, each bundling included seats:
-//   monthly  R1,850  / 0 included seats / extra seat R250/mo
+// tier_1 = Project (R2,250 per breakdown, one-off)
+// tier_2 = Studio commitment ladder, 3 fixed-term cadences, each bundling
+// included seats (no month-to-month option):
 //   3month   R5,500  / 1 included seat  / extra seat R750 flat
 //   6month   R9,500  / 2 included seats / extra seat R1,500 flat
 //   annual   R18,500 / 3 included seats / extra seat R3,000 flat
@@ -102,15 +102,15 @@ function generateTrackingId(): string {
 // The landing page captures the email as a lead, then redirects to the app
 // signup page. The app backend maps the `plan` query param to the full
 // signup_plan id (tier_1_pay_per_breakdown / tier_2_team), and the
-// `billing_period` param (monthly/3month/6month/annual) selects the rate.
+// `billing_period` param (3month/6month/annual) selects the rate.
 export type PricingTier = 'tier_1' | 'tier_2';
-export type BillingPeriod = 'monthly' | '3month' | '6month' | 'annual';
+export type BillingPeriod = '3month' | '6month' | 'annual';
 
 // Headline ZAR amount stored on the lead for analytics (not a charge here).
 // tier_1 has no billing period; tier_2 varies by cadence.
 const TIER_PRICE: Record<PricingTier, Partial<Record<BillingPeriod, number>>> = {
-  tier_1: { monthly: 2250 },
-  tier_2: { monthly: 1850, '3month': 5500, '6month': 9500, annual: 18500 },
+  tier_1: { annual: 2250 },
+  tier_2: { '3month': 5500, '6month': 9500, annual: 18500 },
 };
 
 // Where the CTA sends the user to complete signup on the product app.
@@ -126,7 +126,7 @@ export interface PricingLeadData {
 export async function createPricingLead(leadData: PricingLeadData) {
   const trackingId = generateTrackingId();
   const source = leadData.source || 'pricing_section';
-  const billingPeriod = leadData.billingPeriod || 'monthly';
+  const billingPeriod = leadData.billingPeriod || 'annual';
 
   const signupUrl =
     `${APP_SIGNUP_BASE_URL}?mode=signup&plan=${leadData.tier}` +
@@ -140,7 +140,7 @@ export async function createPricingLead(leadData: PricingLeadData) {
       email: leadData.email,
       name: '',
       payment_tier: leadData.tier,
-      tier_price: TIER_PRICE[leadData.tier][billingPeriod] ?? TIER_PRICE[leadData.tier].monthly,
+      tier_price: TIER_PRICE[leadData.tier][billingPeriod] ?? TIER_PRICE[leadData.tier].annual,
       yoco_url: signupUrl,
       tracking_id: trackingId,
       source,
