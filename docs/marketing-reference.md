@@ -128,14 +128,16 @@ Indie filmmakers · Production companies · Studios · Producers · Line produce
 ## 8. Pricing
 
 ### Model
-Two tiers, priced in ZAR. Uploading and editing scripts is always free — you only pay when you run a breakdown. Individuals pay per breakdown; teams license the whole crew on a cadence that fits (monthly, 3-month, 6-month, or annual), with more seats bundled in on longer terms.
+Two products, priced in ZAR. Uploading and editing scripts is always free — you only pay when you run a breakdown. Individuals pay per breakdown (Project); teams commit to a fixed term (Studio 3, Studio 6, or Studio 12 months), with more seats bundled in on longer commitments.
 
 ### Tiers
 
 | Tier | Price | Billing | Best for |
 |------|-------|---------|----------|
-| **Pay-Per-Breakdown** | **R2,250** / breakdown | Pay as you go | Freelancers, individual writers, small producers |
-| **Team License** ⭐ | **R1,850** / month (extra seats R250/mo each) · **R5,500** / 3 months (1 seat included) · **R9,500** / 6 months (2 seats included) · **R18,500** / year (3 seats included) — extra seats always R250/mo equivalent, whichever cadence you're on | Monthly, 3-month, 6-month, or annual | Production companies, ADs, producers, department heads |
+| **Project** | **R2,250** / breakdown | Pay as you go | Freelancers, individual writers, small producers |
+| **Studio 3** | **R5,500** / 3 months (1 seat included, extra seat R250/mo equivalent) | 3-month commitment | Small teams testing SlateOne |
+| **Studio 6** | **R9,500** / 6 months (2 seats included, extra seat R250/mo equivalent) | 6-month commitment | Teams working across multiple projects |
+| **Studio 12** ⭐ | **R18,500** / year (3 seats included, extra seat R250/mo equivalent) | 12-month commitment | Production companies using SlateOne year-round |
 
 ### What Every Breakdown Includes
 - Full breakdown extraction (cast, props, wardrobe, vehicles, makeup & hair, SFX, sound, atmosphere)
@@ -144,8 +146,8 @@ Two tiers, priced in ZAR. Uploading and editing scripts is always free — you o
 - Zoomable stripboard scheduling
 - All production reports & exports
 
-### Team License Adds
-- Invite crew members (extra seats are a flat R250/month equivalent on every cadence — 3-month R750 flat, 6-month R1,500 flat, annual R3,000 flat — paid by the account owner)
+### Studio Adds
+- Invite crew members (extra seats are a flat R250/month equivalent on every commitment — 3-month R750 flat, 6-month R1,500 flat, 12-month R3,000 flat — paid by the account owner)
 - Department workspaces
 - Cross-department threads
 - Department item tracking & notes
@@ -153,10 +155,10 @@ Two tiers, priced in ZAR. Uploading and editing scripts is always free — you o
 - Unlimited breakdowns for the owner and all paid seats
 
 ### Pricing Copy
-> Upload as many scripts as you like — free. Run a breakdown when you're ready: R2,250 each, or go unlimited for your whole team on the R1,850/month Team License.
+> Upload as many scripts as you like — free. Run a breakdown when you're ready: R2,250 each, or go unlimited for your whole team on a Studio commitment starting at R5,500 for 3 months.
 
 ### Anti-Objection Copy
-> No lock-in. Uploads and manual scene work are always free. On the Team License, one owner covers every seat, so inviting your crew is one click — no per-member checkout.
+> Uploads and manual scene work are always free, no matter which plan. On a Studio plan, one owner covers every included seat, so inviting your crew is one click — no per-member checkout.
 
 ---
 
