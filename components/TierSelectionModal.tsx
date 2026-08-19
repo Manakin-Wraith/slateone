@@ -19,8 +19,8 @@ interface TierDetail {
   seatPrice?: string;
 }
 
-const SOLO_DETAIL: TierDetail = {
-  name: 'Pay-Per-Breakdown',
+const PROJECT_DETAIL: TierDetail = {
+  name: 'Project',
   tagline: 'Unlimited uploads · Pay only when you run a breakdown',
   priceLabel: 'Per breakdown',
   price: 'R2,250',
@@ -28,43 +28,33 @@ const SOLO_DETAIL: TierDetail = {
 
 const TIER_DETAILS: Record<PricingTier, Record<BillingPeriod, TierDetail>> = {
   tier_1: {
-    monthly: SOLO_DETAIL,
-    '3month': SOLO_DETAIL,
-    '6month': SOLO_DETAIL,
-    annual: SOLO_DETAIL,
+    '3month': PROJECT_DETAIL,
+    '6month': PROJECT_DETAIL,
+    annual: PROJECT_DETAIL,
   },
   tier_2: {
-    monthly: {
-      name: 'Team License',
-      tagline: 'Unlimited breakdowns · Full team collaboration',
-      priceLabel: 'Monthly license',
-      price: 'R1,850/mo',
-      includedSeats: 0,
-      seatLabel: '+ Extra seat',
-      seatPrice: 'R250/mo',
-    },
     '3month': {
-      name: 'Team License',
+      name: 'Studio 3',
       tagline: 'Unlimited breakdowns · Full team collaboration',
-      priceLabel: '3-month license',
+      priceLabel: '3-month commitment',
       price: 'R5,500 / 3mo',
       includedSeats: 1,
       seatLabel: '+ Extra seat',
       seatPrice: 'R750 flat',
     },
     '6month': {
-      name: 'Team License',
+      name: 'Studio 6',
       tagline: 'Unlimited breakdowns · Full team collaboration',
-      priceLabel: '6-month license',
+      priceLabel: '6-month commitment',
       price: 'R9,500 / 6mo',
       includedSeats: 2,
       seatLabel: '+ Extra seat',
       seatPrice: 'R1,500 flat',
     },
     annual: {
-      name: 'Team License',
+      name: 'Studio 12',
       tagline: 'Unlimited breakdowns · Full team collaboration',
-      priceLabel: 'Annual license (2 months free)',
+      priceLabel: '12-month commitment',
       price: 'R18,500/yr',
       includedSeats: 3,
       seatLabel: '+ Extra seat',

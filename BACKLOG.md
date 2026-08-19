@@ -69,10 +69,19 @@ real page. Needs a product-owner pass on:
 ## Marketing / content
 
 - [ ] `docs/pitch-deck.md` / `SlateOne_Pitch_Deck_v1.html` / `.pdf` — confirm these
-  reflect current pricing (monthly Team License) before sharing externally; they
+  reflect current pricing (Project / Studio 3, 6, 12) before sharing externally; they
   likely still show the old annual-only number.
-- [ ] Sweep `docs/marketing-reference.md` for any remaining "Annual Team License" /
-  annual-only pricing language now that monthly is the default framing.
+- [ ] **Install the Meta Pixel on slateone.studio.** Blocked on the Pixel ID from
+  Events Manager (Business Manager → Events Manager → Data Sources) — the Ad
+  Account ID (`206300442416906`) is a different object and won't work. User is
+  currently sorting out the Meta ad accounts; once the Pixel ID is in hand, drop
+  the base pixel snippet into `index.html` (no other integration work needed).
+- [ ] `docs/app-repo-handoff-pricing.md` and `docs/pitch-deck.md` still use the
+  Pay-Per-Breakdown/Team License names and older R450/R150 numbers (pre-existing
+  drift from before the 2026-08-19 Studio commitment-ladder rename) — need both
+  the naming update (Project/Studio 3/6/12) and a numbers reconciliation pass.
+  `public/TERMS OF SERVICE FOR SLATEONE STUDIO.md` (the standalone legal doc,
+  separate from `components/TermsOfService.tsx`) is similarly stale.
 
 ## Engineering / infra
 
