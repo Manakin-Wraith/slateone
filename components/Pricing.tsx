@@ -3,60 +3,55 @@ import { Check, Users } from 'lucide-react';
 import { TierSelectionModal } from './TierSelectionModal';
 import { BillingPeriod, PricingTier } from '../lib/supabase';
 
-interface TeamsBand {
+const CADENCE_MONTHS: Record<BillingPeriod, number> = {
+  '3month': 3,
+  '6month': 6,
+  annual: 12,
+};
+
+function formatZAR(amount: number): string {
+  return `R${amount.toLocaleString('en-ZA')}`;
+}
+
+function effectiveMonthlyLabel(totalZAR: number, cadence: BillingPeriod): string {
+  const months = CADENCE_MONTHS[cadence];
+  return `${formatZAR(Math.round(totalZAR / months))}/mo effective`;
+}
+
+interface CollaborationBand {
   eyebrow: string;
   headline: string;
   line: string;
   features: string[];
 }
 
-interface BillingVariant {
-  price: string;
-  priceUnit: string;
-  includedSeats: number;
-  seatPrice: string;
-  seatPriceUnit: string;
-  savingsBadge?: string;
-}
-
-const CADENCES: BillingPeriod[] = ['monthly', '3month', '6month', 'annual'];
-
-const CADENCE_LABELS: Record<BillingPeriod, string> = {
-  monthly: 'Monthly',
-  '3month': '3-Month',
-  '6month': '6-Month',
-  annual: 'Annual',
-};
-
-const CADENCE_HEADLINES: Record<BillingPeriod, string> = {
-  monthly: 'R1,850/month — extra seats R250/mo each',
-  '3month': 'R5,500 for 3 months — you + 1 teammate included',
-  '6month': 'R9,500 for 6 months — your 3-person crew included',
-  annual: 'R18,500/year — your whole 4-person team included',
-};
-
-interface TierConfig {
-  id: PricingTier;
+interface LadderCard {
+  key: string;
+  tier: PricingTier;
+  billingPeriod: BillingPeriod;
   badge: string;
   name: string;
-  price: string;
+  priceZAR: number;
   priceUnit: string;
-  priceNote?: string;
-  billing?: Record<BillingPeriod, BillingVariant>;
+  effectiveMonthly?: string;
+  includedSeats?: number;
+  seatPriceLabel?: string;
   tagline: string;
   features: string[];
   footnote?: string;
-  teamsBand?: TeamsBand;
   cta: string;
-  highlighted?: boolean;
+  accent: 'neutral' | 'cyan' | 'amber';
+  badgeRibbon?: string;
 }
 
-const TIERS: TierConfig[] = [
+const CARDS: LadderCard[] = [
   {
-    id: 'tier_1',
-    badge: 'Solo',
-    name: 'Pay-Per-Breakdown',
-    price: 'R2,250',
+    key: 'project',
+    tier: 'tier_1',
+    billingPeriod: 'annual',
+    badge: 'Project',
+    name: 'Project',
+    priceZAR: 2250,
     priceUnit: '/ breakdown',
     tagline: 'For individual filmmakers. Pay only when you run a breakdown.',
     features: [
@@ -70,70 +65,93 @@ const TIERS: TierConfig[] = [
     ],
     footnote: 'Just you — no crew collaboration.',
     cta: 'Get Started',
+    accent: 'neutral',
   },
   {
-    id: 'tier_2',
-    badge: 'Crew',
-    name: 'Team License',
-    price: 'R1,850',
-    priceUnit: '/ month',
-    billing: {
-      monthly: {
-        price: 'R1,850',
-        priceUnit: '/ month',
-        includedSeats: 0,
-        seatPrice: 'R250',
-        seatPriceUnit: '/ mo',
-      },
-      '3month': {
-        price: 'R5,500',
-        priceUnit: '/ 3 months',
-        includedSeats: 1,
-        seatPrice: 'R750',
-        seatPriceUnit: 'flat',
-        savingsBadge: 'Seat included',
-      },
-      '6month': {
-        price: 'R9,500',
-        priceUnit: '/ 6 months',
-        includedSeats: 2,
-        seatPrice: 'R1,500',
-        seatPriceUnit: 'flat',
-        savingsBadge: '~14% savings',
-      },
-      annual: {
-        price: 'R18,500',
-        priceUnit: '/ year',
-        includedSeats: 3,
-        seatPrice: 'R3,000',
-        seatPriceUnit: 'flat',
-        savingsBadge: '~17% savings',
-      },
-    },
-    tagline: 'Unlimited breakdowns for your whole crew.',
-    features: [
-      'Everything in Solo, plus unlimited breakdowns included',
-    ],
-    teamsBand: {
-      eyebrow: 'One Source of Truth',
-      headline: 'Your whole crew, one breakdown.',
-      line: 'No more emailing spreadsheets — everyone works off the same live breakdown.',
-      features: [
-        'Invite crew members',
-        'Department workspaces',
-        'Cross-department threads',
-        'Item tracking & notes',
-        'Team access control',
-      ],
-    },
+    key: 'studio_3',
+    tier: 'tier_2',
+    billingPeriod: '3month',
+    badge: 'Studio 3',
+    name: 'Studio 3',
+    priceZAR: 5500,
+    priceUnit: '/ 3 months',
+    effectiveMonthly: effectiveMonthlyLabel(5500, '3month'),
+    includedSeats: 1,
+    seatPriceLabel: 'R250 / mo',
+    tagline: '3-month commitment. You + 1 teammate included.',
+    features: ['Everything in Project, plus unlimited breakdowns included'],
     cta: 'Get Started',
-    highlighted: true,
+    accent: 'neutral',
+  },
+  {
+    key: 'studio_6',
+    tier: 'tier_2',
+    billingPeriod: '6month',
+    badge: 'Studio 6',
+    name: 'Studio 6',
+    priceZAR: 9500,
+    priceUnit: '/ 6 months',
+    effectiveMonthly: effectiveMonthlyLabel(9500, '6month'),
+    includedSeats: 2,
+    seatPriceLabel: 'R250 / mo',
+    tagline: '6-month commitment. Your 3-person crew included.',
+    features: ['Everything in Project, plus unlimited breakdowns included'],
+    cta: 'Get Started',
+    accent: 'cyan',
+  },
+  {
+    key: 'studio_12',
+    tier: 'tier_2',
+    billingPeriod: 'annual',
+    badge: 'Studio 12',
+    name: 'Studio 12',
+    priceZAR: 18500,
+    priceUnit: '/ year',
+    effectiveMonthly: effectiveMonthlyLabel(18500, 'annual'),
+    includedSeats: 3,
+    seatPriceLabel: 'R250 / mo',
+    tagline: '12-month commitment. Your whole 4-person team included.',
+    features: ['Everything in Project, plus unlimited breakdowns included'],
+    cta: 'Get Started',
+    accent: 'amber',
+    badgeRibbon: 'Best Value',
   },
 ];
 
+const COLLABORATION_BAND: CollaborationBand = {
+  eyebrow: 'One Source of Truth',
+  headline: 'Your whole crew, one breakdown.',
+  line: 'No more emailing spreadsheets — everyone works off the same live breakdown, on any Studio plan.',
+  features: [
+    'Invite crew members',
+    'Department workspaces',
+    'Cross-department threads',
+    'Item tracking & notes',
+    'Team access control',
+  ],
+};
+
+const ACCENT_CARD_CLASSES: Record<LadderCard['accent'], string> = {
+  neutral: 'border-slate-700 bg-slate-800',
+  cyan: 'border-cyan-500/30 bg-cyan-500/[0.03]',
+  amber: 'border-amber-500/30 bg-amber-500/[0.03] shadow-lg',
+};
+
+const ACCENT_BADGE_CLASSES: Record<LadderCard['accent'], string> = {
+  neutral: 'text-slate-400 bg-slate-700 border border-slate-600',
+  cyan: 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/20',
+  amber: 'text-amber-500 bg-amber-500/10 border border-amber-500/20',
+};
+
+const ACCENT_CTA_CLASSES: Record<LadderCard['accent'], string> = {
+  neutral: 'bg-slate-700 text-slate-50 border border-slate-600 hover:bg-slate-600',
+  cyan: 'bg-slate-700 text-slate-50 border border-cyan-500/30 hover:bg-slate-600',
+  amber: 'bg-amber-500 text-slate-900 hover:bg-amber-400',
+};
+
 export const Pricing: React.FC = () => {
-  const [selectedTier, setSelectedTier] = useState<PricingTier | null>(null);
-  const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('annual');
+  const [selectedCardKey, setSelectedCardKey] = useState<string | null>(null);
+  const selectedCard = CARDS.find((card) => card.key === selectedCardKey) ?? null;
 
   return (
     <section id="pricing" className="bg-slate-950 relative overflow-hidden">
@@ -151,18 +169,18 @@ export const Pricing: React.FC = () => {
               Simple Pricing.<br/>Built For How You Work.
             </h2>
             <p className="text-lg text-slate-400 leading-relaxed mb-6">
-              Pay per breakdown when you need it, or license your whole
-              team on a term that fits. Uploading and editing scripts is
-              always free &mdash; you only pay when you run a breakdown.
+              Pay per project when you need it, or lock in a term and bring
+              your crew along. Uploading and editing scripts is always free
+              &mdash; you only pay when you run a breakdown.
             </p>
             <p className="text-sm text-slate-500 font-mono">
-              Prices in ZAR. No lock-in.
+              Prices in ZAR.
             </p>
           </div>
         </div>
 
         {/* ═══════════════════════════════════════════════ */}
-        {/* SECTION 2: Tier Grid */}
+        {/* SECTION 2: Card Ladder */}
         {/* ═══════════════════════════════════════════════ */}
         <div className="py-32 border-b border-slate-800">
 
@@ -170,169 +188,104 @@ export const Pricing: React.FC = () => {
             Work solo. Or bring the whole crew.
           </p>
 
-          <div className="grid md:grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-6 max-w-6xl mx-auto items-stretch">
-            {TIERS.map((tier) => {
-              return (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto items-stretch">
+            {CARDS.map((card) => (
               <div
-                key={tier.id}
-                className={`relative border rounded-2xl overflow-hidden flex flex-col ${
-                  tier.highlighted
-                    ? 'border-amber-500/30 bg-amber-500/[0.03] shadow-lg'
-                    : 'border-slate-700 bg-slate-800'
-                }`}
+                key={card.key}
+                className={`relative border rounded-2xl overflow-hidden flex flex-col ${ACCENT_CARD_CLASSES[card.accent]}`}
               >
-                {tier.highlighted && (
+                {card.badgeRibbon && (
                   <div className="absolute top-0 right-0 text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-slate-900 bg-amber-500 px-3 py-1 rounded-bl-lg">
-                    Recommended
+                    {card.badgeRibbon}
                   </div>
                 )}
 
-                {/* Plan Header */}
-                <div className="p-10 border-b border-slate-700">
-                  <div className="flex items-center justify-between gap-3 mb-6">
-                    <span
-                      className={`text-[10px] font-mono font-bold uppercase tracking-[0.2em] px-3 py-1 rounded inline-block ${
-                        tier.highlighted
-                          ? 'text-amber-500 bg-amber-500/10 border border-amber-500/20'
-                          : 'text-slate-400 bg-slate-700 border border-slate-600'
-                      }`}
-                    >
-                      {tier.badge}
-                    </span>
+                {/* Card Header */}
+                <div className="p-8 border-b border-slate-700">
+                  <span
+                    className={`text-[10px] font-mono font-bold uppercase tracking-[0.2em] px-3 py-1 rounded inline-block mb-6 ${ACCENT_BADGE_CLASSES[card.accent]}`}
+                  >
+                    {card.badge}
+                  </span>
 
+                  <h3 className="text-xl font-bold text-slate-50 mb-4">{card.name}</h3>
+
+                  <div className="flex items-baseline gap-1 mb-1">
+                    <span className="text-4xl font-bold text-slate-50">{formatZAR(card.priceZAR)}</span>
+                    <span className="text-base text-slate-500 font-mono">{card.priceUnit}</span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-slate-50 mb-4">{tier.name}</h3>
-
-                  {tier.billing ? (
-                    <div className="mb-1">
-                      <p className="text-lg font-bold text-slate-50 mb-4">
-                        {CADENCE_HEADLINES[billingPeriod]}
-                      </p>
-                      <div className="overflow-x-auto rounded-lg border border-slate-700">
-                        <table className="w-full min-w-[420px] text-left text-[13px] font-mono">
-                          <thead>
-                            <tr className="bg-slate-900 text-slate-500 uppercase tracking-wider text-[10px]">
-                              <th className="px-3 py-2 font-bold">Cadence</th>
-                              <th className="px-3 py-2 font-bold">Price</th>
-                              <th className="px-3 py-2 font-bold">Included</th>
-                              <th className="px-3 py-2 font-bold">Extra seat</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {CADENCES.map((cadence) => {
-                              const variant = tier.billing![cadence];
-                              const isActive = billingPeriod === cadence;
-                              return (
-                                <tr
-                                  key={cadence}
-                                  onClick={() => setBillingPeriod(cadence)}
-                                  tabIndex={0}
-                                  role="button"
-                                  aria-pressed={isActive}
-                                  onKeyDown={(e) => {
-                                    if (e.key === 'Enter' || e.key === ' ') {
-                                      e.preventDefault();
-                                      setBillingPeriod(cadence);
-                                    }
-                                  }}
-                                  className={`cursor-pointer border-t border-slate-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-500 focus-visible:outline-offset-[-2px] ${
-                                    isActive ? 'bg-amber-500/10' : 'hover:bg-slate-700/40'
-                                  }`}
-                                >
-                                  <td className={`px-3 py-2.5 font-bold ${isActive ? 'text-amber-500' : 'text-slate-300'}`}>
-                                    {CADENCE_LABELS[cadence]}
-                                  </td>
-                                  <td className="px-3 py-2.5 text-slate-50">{variant.price}</td>
-                                  <td className="px-3 py-2.5 text-slate-400">
-                                    {variant.includedSeats > 0
-                                      ? `${variant.includedSeats} seat${variant.includedSeats > 1 ? 's' : ''}`
-                                      : '—'}
-                                    {variant.savingsBadge && (
-                                      <span className="ml-2 inline-block text-[9px] font-bold uppercase tracking-wide text-amber-500 bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded align-middle">
-                                        {variant.savingsBadge}
-                                      </span>
-                                    )}
-                                  </td>
-                                  <td className="px-3 py-2.5 text-slate-400">
-                                    {variant.seatPrice} {variant.seatPriceUnit}
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                      <p className="text-[12px] text-slate-500 mt-3">
-                        Need more? Extra seats are a flat R250/month, no matter which
-                        plan — simple math, no surprises.
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="flex items-baseline gap-1 mb-1">
-                      <span className="text-5xl font-bold text-slate-50">{tier.price}</span>
-                      <span className="text-base text-slate-500 font-mono">{tier.priceUnit}</span>
-                    </div>
+                  {card.effectiveMonthly && (
+                    <p className="text-[13px] text-slate-500 font-mono mt-1">{card.effectiveMonthly}</p>
                   )}
-                  <p className="text-slate-400 text-sm mt-3">{tier.tagline}</p>
+
+                  {typeof card.includedSeats === 'number' && (
+                    <p className="text-[13px] text-slate-400 mt-3">
+                      {card.includedSeats} seat{card.includedSeats > 1 ? 's' : ''} included
+                      {card.seatPriceLabel && (
+                        <span className="text-slate-500"> · extra seat {card.seatPriceLabel}</span>
+                      )}
+                    </p>
+                  )}
+
+                  <p className="text-slate-400 text-sm mt-4">{card.tagline}</p>
                 </div>
 
-                {/* Features List */}
-                <div className="p-10 space-y-4 flex-1">
-                  {tier.features.map((item, i) => (
-                    <div key={i} className="flex items-start gap-3 text-[15px] text-slate-400">
+                {/* Features */}
+                <div className="p-8 space-y-3 flex-1">
+                  {card.features.map((item, i) => (
+                    <div key={i} className="flex items-start gap-3 text-[14px] text-slate-400">
                       <Check className="w-4 h-4 text-amber-500/50 flex-shrink-0 mt-1" />
                       {item}
                     </div>
                   ))}
 
-                  {tier.footnote && (
-                    <p className="text-[13px] text-slate-500 italic pt-2">{tier.footnote}</p>
-                  )}
-
-                  {tier.teamsBand && (
-                    <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-500/[0.06] p-6">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Users className="w-4 h-4 text-amber-500" />
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-amber-500">
-                          {tier.teamsBand.eyebrow}
-                        </span>
-                      </div>
-                      <h4 className="text-lg font-bold text-slate-50 mb-2 leading-tight">
-                        {tier.teamsBand.headline}
-                      </h4>
-                      <p className="text-sm text-slate-400 leading-relaxed mb-5">
-                        {tier.teamsBand.line}
-                      </p>
-                      <div className="space-y-3">
-                        {tier.teamsBand.features.map((item, i) => (
-                          <div key={i} className="flex items-center gap-3 text-[15px] text-slate-200">
-                            <Check className="w-4 h-4 text-amber-500 flex-shrink-0" />
-                            {item}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                  {card.footnote && (
+                    <p className="text-[13px] text-slate-500 italic pt-2">{card.footnote}</p>
                   )}
                 </div>
 
                 {/* CTA */}
-                <div className="px-10 pb-10">
+                <div className="px-8 pb-8">
                   <button
-                    onClick={() => setSelectedTier(tier.id)}
-                    className={`w-full font-bold py-4 px-6 rounded-lg transition-all duration-300 text-sm cursor-pointer ${
-                      tier.highlighted
-                        ? 'bg-amber-500 text-slate-900 hover:bg-amber-400'
-                        : 'bg-slate-700 text-slate-50 border border-slate-600 hover:bg-slate-600'
-                    }`}
+                    onClick={() => setSelectedCardKey(card.key)}
+                    className={`w-full font-bold py-4 px-6 rounded-lg transition-all duration-300 text-sm cursor-pointer ${ACCENT_CTA_CLASSES[card.accent]}`}
                   >
-                    {tier.cta}
+                    {card.cta}
                   </button>
                 </div>
               </div>
-              );
-            })}
+            ))}
           </div>
+
+          {/* Shared collaboration panel — applies to all Studio cards */}
+          <div className="mt-10 max-w-4xl mx-auto rounded-xl border border-amber-500/20 bg-amber-500/[0.06] p-8">
+            <div className="flex items-center gap-2 mb-3">
+              <Users className="w-4 h-4 text-amber-500" />
+              <span className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-amber-500">
+                {COLLABORATION_BAND.eyebrow}
+              </span>
+            </div>
+            <h4 className="text-lg font-bold text-slate-50 mb-2 leading-tight">
+              {COLLABORATION_BAND.headline}
+            </h4>
+            <p className="text-sm text-slate-400 leading-relaxed mb-5">
+              {COLLABORATION_BAND.line}
+            </p>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {COLLABORATION_BAND.features.map((item, i) => (
+                <div key={i} className="flex items-center gap-3 text-[15px] text-slate-200">
+                  <Check className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="text-center text-[12px] text-slate-500 mt-6">
+            Need more? Extra seats are a flat R250/month on any Studio plan
+            — simple math, no surprises.
+          </p>
         </div>
 
         {/* ═══════════════════════════════════════════════ */}
@@ -366,10 +319,10 @@ export const Pricing: React.FC = () => {
 
       {/* Tier Selection Modal */}
       <TierSelectionModal
-        isOpen={selectedTier !== null}
-        onClose={() => setSelectedTier(null)}
-        tier={selectedTier ?? 'tier_1'}
-        billingPeriod={selectedTier === 'tier_2' ? billingPeriod : 'monthly'}
+        isOpen={selectedCard !== null}
+        onClose={() => setSelectedCardKey(null)}
+        tier={selectedCard?.tier ?? 'tier_1'}
+        billingPeriod={selectedCard?.billingPeriod ?? 'annual'}
       />
     </section>
   );
