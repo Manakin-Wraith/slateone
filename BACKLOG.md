@@ -69,10 +69,8 @@ real page. Needs a product-owner pass on:
 ## Marketing / content
 
 - [ ] `docs/pitch-deck.md` / `SlateOne_Pitch_Deck_v1.html` / `.pdf` — confirm these
-  reflect current pricing (monthly Team License) before sharing externally; they
+  reflect current pricing (Project / Studio 3, 6, 12) before sharing externally; they
   likely still show the old annual-only number.
-- [ ] Sweep `docs/marketing-reference.md` for any remaining "Annual Team License" /
-  annual-only pricing language now that monthly is the default framing.
 - [ ] **Install the Meta Pixel on slateone.studio.** Blocked on the Pixel ID from
   Events Manager (Business Manager → Events Manager → Data Sources) — the Ad
   Account ID (`206300442416906`) is a different object and won't work. User is

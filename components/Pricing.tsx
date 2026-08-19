@@ -10,7 +10,7 @@ const CADENCE_MONTHS: Record<BillingPeriod, number> = {
 };
 
 function formatZAR(amount: number): string {
-  return `R${amount.toLocaleString('en-ZA')}`;
+  return `R${amount.toLocaleString('en-US')}`;
 }
 
 function effectiveMonthlyLabel(totalZAR: number, cadence: BillingPeriod): string {
@@ -75,7 +75,6 @@ const CARDS: LadderCard[] = [
     name: 'Studio 3',
     priceZAR: 5500,
     priceUnit: '/ 3 months',
-    effectiveMonthly: effectiveMonthlyLabel(5500, '3month'),
     includedSeats: 1,
     seatPriceLabel: 'R250 / mo',
     tagline: '3-month commitment. You + 1 teammate included.',
@@ -91,7 +90,6 @@ const CARDS: LadderCard[] = [
     name: 'Studio 6',
     priceZAR: 9500,
     priceUnit: '/ 6 months',
-    effectiveMonthly: effectiveMonthlyLabel(9500, '6month'),
     includedSeats: 2,
     seatPriceLabel: 'R250 / mo',
     tagline: '6-month commitment. Your 3-person crew included.',
@@ -107,7 +105,6 @@ const CARDS: LadderCard[] = [
     name: 'Studio 12',
     priceZAR: 18500,
     priceUnit: '/ year',
-    effectiveMonthly: effectiveMonthlyLabel(18500, 'annual'),
     includedSeats: 3,
     seatPriceLabel: 'R250 / mo',
     tagline: '12-month commitment. Your whole 4-person team included.',
@@ -116,7 +113,13 @@ const CARDS: LadderCard[] = [
     accent: 'amber',
     badgeRibbon: 'Best Value',
   },
-];
+].map((card) => ({
+  ...card,
+  effectiveMonthly:
+    typeof card.includedSeats === 'number'
+      ? effectiveMonthlyLabel(card.priceZAR, card.billingPeriod as BillingPeriod)
+      : undefined,
+}) as LadderCard);
 
 const COLLABORATION_BAND: CollaborationBand = {
   eyebrow: 'One Source of Truth',
