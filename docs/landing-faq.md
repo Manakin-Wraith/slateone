@@ -94,35 +94,34 @@ Yes — SlateOne generates production reports as PDFs you can download, print, o
 
 Uploading and editing scripts is always free — you only pay when you run a breakdown. Two ways to pay for that, priced in **ZAR**:
 
-- **Pay-Per-Breakdown** — **R2,250 per breakdown**. For individual filmmakers working solo; no crew collaboration.
-- **Team License** — unlimited breakdowns for your whole crew, billed on whichever term fits:
+- **Project** — **R2,250 per breakdown**. For individual filmmakers working solo; no crew collaboration.
+- **Studio** — unlimited breakdowns for your whole crew, on a fixed-term commitment:
 
-  | Cadence | Price | Seats included | Extra seat |
+  | Plan | Price | Seats included | Extra seat |
   |---|---|---|---|
-  | Monthly | R1,850 / month | None | R250 / mo |
-  | 3-Month | R5,500 / 3 months | 1 | R750 flat |
-  | 6-Month | R9,500 / 6 months | 2 | R1,500 flat |
-  | Annual | R18,500 / year | 3 | R3,000 flat |
+  | Studio 3 | R5,500 / 3 months | 1 | R750 flat |
+  | Studio 6 | R9,500 / 6 months | 2 | R1,500 flat |
+  | Studio 12 | R18,500 / year | 3 | R3,000 flat |
 
-The Team License includes crew invites, department workspaces, cross-department threads, item tracking, and team access control on top of everything in Pay-Per-Breakdown.
+Studio includes crew invites, department workspaces, cross-department threads, item tracking, and team access control on top of everything in Project.
 
 *(Figures verified against `components/Pricing.tsx` as of this draft — recheck before publishing if pricing changes.)*
 
 ### How do I pay?
 
-The landing page doesn't take payment directly. You enter your email, choose a plan and (for Team License) a billing cadence, and we redirect you to `app.slateone.studio` to create your account and complete signup.
+The landing page doesn't take payment directly. You enter your email, choose a plan and (for Studio) a commitment length, and we redirect you to `app.slateone.studio` to create your account and complete signup.
 
 Billing itself runs through **PayFast**, South Africa's payment gateway, in ZAR. PayFast supports Visa/Mastercard credit and debit cards, Instant EFT, and local wallets/QR methods like SnapScan and Zapper.
 
 ### Is there a free trial?
 
-No — SlateOne is paid-only. Uploading and editing scripts is free with no account limits; you only pay when you actually run a breakdown (Pay-Per-Breakdown) or take out a Team License.
+No — SlateOne is paid-only. Uploading and editing scripts is free with no account limits; you only pay when you actually run a breakdown (Project) or take out a Studio plan.
 
 ### Can I cancel anytime?
 
-Pay-Per-Breakdown has nothing to cancel — it's a one-off charge per breakdown, not a subscription.
+Project has nothing to cancel — it's a one-off charge per breakdown, not a subscription.
 
-For the Team License, each cadence (monthly, 3-month, 6-month, annual) is a **prepaid term**: you pay upfront and have full access for that whole period. You can cancel at any time to stop the *next* renewal, but — standard practice for prepaid terms — the current term itself is non-refundable and runs to its end date; there's no partial refund for unused time.
+Every Studio plan (3, 6, or 12 months) is a **prepaid term**: you pay upfront and have full access for that whole period. You can cancel at any time to stop the *next* renewal, but — standard practice for prepaid terms — the current term itself is non-refundable and runs to its end date; there's no partial refund for unused time.
 
 > **⚠️ Confirm:** This follows standard prepaid-subscription practice, but it's still a policy decision your team should formally sign off on (and the app doesn't yet have a self-serve "cancel" action wired up in the code as of this draft — renewals are charged manually via PayFast's Recurring Billing API using a stored token, not on an automatic timer). Confirm the actual cancellation mechanics with your team before publishing.
 
