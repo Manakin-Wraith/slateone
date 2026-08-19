@@ -203,14 +203,14 @@ const categories: FAQCategory[] = [
               breakdown. Two ways to pay for that, priced in ZAR:
             </p>
             <ul className="list-disc list-inside space-y-2 mb-4 ml-4">
-              <li>Pay-Per-Breakdown — R2,250 per breakdown. For individual filmmakers working solo; no crew collaboration.</li>
-              <li>Team License — unlimited breakdowns for your whole crew, billed on whichever term fits:</li>
+              <li>Project — R2,250 per breakdown. For individual filmmakers working solo; no crew collaboration.</li>
+              <li>Studio — unlimited breakdowns for your whole crew, on a fixed-term commitment:</li>
             </ul>
             <div className="overflow-x-auto mb-4">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b border-slate-700">
-                    <th className="py-2 pr-4 text-slate-50 font-semibold">Cadence</th>
+                    <th className="py-2 pr-4 text-slate-50 font-semibold">Plan</th>
                     <th className="py-2 pr-4 text-slate-50 font-semibold">Price</th>
                     <th className="py-2 pr-4 text-slate-50 font-semibold">Seats included</th>
                     <th className="py-2 text-slate-50 font-semibold">Extra seat</th>
@@ -218,25 +218,19 @@ const categories: FAQCategory[] = [
                 </thead>
                 <tbody className="text-slate-200">
                   <tr className="border-b border-slate-800">
-                    <td className="py-2 pr-4">Monthly</td>
-                    <td className="py-2 pr-4">R1,850 / month</td>
-                    <td className="py-2 pr-4">None</td>
-                    <td className="py-2">R250 / mo</td>
-                  </tr>
-                  <tr className="border-b border-slate-800">
-                    <td className="py-2 pr-4">3-Month</td>
+                    <td className="py-2 pr-4">Studio 3</td>
                     <td className="py-2 pr-4">R5,500 / 3 months</td>
                     <td className="py-2 pr-4">1</td>
                     <td className="py-2">R750 flat</td>
                   </tr>
                   <tr className="border-b border-slate-800">
-                    <td className="py-2 pr-4">6-Month</td>
+                    <td className="py-2 pr-4">Studio 6</td>
                     <td className="py-2 pr-4">R9,500 / 6 months</td>
                     <td className="py-2 pr-4">2</td>
                     <td className="py-2">R1,500 flat</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pr-4">Annual</td>
+                    <td className="py-2 pr-4">Studio 12</td>
                     <td className="py-2 pr-4">R18,500 / year</td>
                     <td className="py-2 pr-4">3</td>
                     <td className="py-2">R3,000 flat</td>
@@ -245,9 +239,9 @@ const categories: FAQCategory[] = [
               </table>
             </div>
             <p>
-              The Team License includes crew invites, department workspaces, cross-department
+              Studio includes crew invites, department workspaces, cross-department
               threads, item tracking, and team access control on top of everything in
-              Pay-Per-Breakdown.
+              Project.
             </p>
           </>
         ),
@@ -258,7 +252,7 @@ const categories: FAQCategory[] = [
           <>
             <p className="mb-4">
               The landing page doesn't take payment directly. You enter your email, choose a plan
-              and (for Team License) a billing cadence, and we redirect you to
+              and (for Studio) a commitment length, and we redirect you to
               app.slateone.studio to create your account and complete signup.
             </p>
             <p>
@@ -274,8 +268,8 @@ const categories: FAQCategory[] = [
         answer: (
           <p>
             No — SlateOne is paid-only. Uploading and editing scripts is free with no account
-            limits; you only pay when you actually run a breakdown (Pay-Per-Breakdown) or take out
-            a Team License.
+            limits; you only pay when you actually run a breakdown (Project) or take out
+            a Studio plan.
           </p>
         ),
       },
@@ -284,15 +278,15 @@ const categories: FAQCategory[] = [
         answer: (
           <>
             <p className="mb-4">
-              Pay-Per-Breakdown has nothing to cancel — it's a one-off charge per breakdown, not a
+              Project has nothing to cancel — it's a one-off charge per breakdown, not a
               subscription.
             </p>
             <p>
-              For the Team License, each cadence (monthly, 3-month, 6-month, annual) is a prepaid
-              term: you pay upfront and have full access for that whole period. You can cancel at
-              any time to stop the next renewal, but — standard practice for prepaid terms — the
-              current term itself is non-refundable and runs to its end date; there's no partial
-              refund for unused time.
+              Every Studio plan (3, 6, or 12 months) is a prepaid term: you pay upfront and
+              have full access for that whole period. You can cancel at any time to stop the
+              next renewal, but — standard practice for prepaid terms — the current term
+              itself is non-refundable and runs to its end date; there's no partial refund
+              for unused time.
             </p>
           </>
         ),
